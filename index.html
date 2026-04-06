@@ -347,6 +347,45 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 .copy-btn { padding:4px 12px; background:var(--accent); color:var(--primary); border:none; border-radius:6px; font-family:'Cairo',sans-serif; font-size:0.78rem; cursor:pointer; }
 .template-notice { background:#e8f4fd; border:1px solid #bee3f8; border-radius:10px; padding:15px; margin-bottom:20px; font-size:0.85rem; color:#2c5282; display:flex; gap:10px; align-items:flex-start; }
 
+
+/* ===== CRUD STYLES ===== */
+.crud-add-bar { display:flex; justify-content:flex-end; margin-bottom:18px; }
+.crud-add-btn { background:linear-gradient(135deg,var(--accent),#e8b830); color:var(--primary); border:none; padding:10px 22px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 3px 12px rgba(201,162,39,0.4); transition:all 0.2s; }
+.crud-add-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(201,162,39,0.5); }
+.card-crud-actions { display:none; position:absolute; top:10px; left:10px; gap:6px; z-index:10; }
+.card-crud-actions.visible { display:flex; }
+.crud-edit-btn, .crud-del-btn { border:none; border-radius:7px; padding:5px 10px; font-size:0.78rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; transition:all 0.2s; }
+.crud-edit-btn { background:#3b82f6; color:white; }
+.crud-del-btn  { background:#ef4444; color:white; }
+.crud-edit-btn:hover { background:#2563eb; }
+.crud-del-btn:hover  { background:#dc2626; }
+.teacher-card, .event-card, .achieve-card, .project-card { position:relative; }
+
+/* ===== MODAL ===== */
+.crud-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+.crud-modal-overlay.open { display:flex; }
+.crud-modal { background:white; border-radius:18px; padding:32px; width:90%; max-width:560px; max-height:85vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); font-family:'Cairo',sans-serif; direction:rtl; }
+.crud-modal h2 { color:var(--primary); font-size:1.3rem; margin:0 0 24px; display:flex; align-items:center; gap:10px; }
+.crud-modal h2 span { font-size:1.6rem; }
+.form-group { margin-bottom:16px; }
+.form-group label { display:block; font-size:0.88rem; font-weight:700; color:#374151; margin-bottom:6px; }
+.form-group input, .form-group textarea, .form-group select { width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; transition:border 0.2s; box-sizing:border-box; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--accent); outline:none; }
+.form-group textarea { min-height:80px; resize:vertical; }
+.modal-btns { display:flex; gap:12px; margin-top:24px; justify-content:flex-end; }
+.modal-save-btn { background:linear-gradient(135deg,var(--accent),#e8b830); color:var(--primary); border:none; padding:11px 28px; border-radius:10px; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; }
+.modal-cancel-btn { background:#f3f4f6; color:#374151; border:none; padding:11px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; }
+.modal-save-btn:hover { opacity:0.9; }
+.modal-cancel-btn:hover { background:#e5e7eb; }
+.confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; align-items:center; justify-content:center; }
+.confirm-overlay.open { display:flex; }
+.confirm-box { background:white; border-radius:16px; padding:28px; width:340px; text-align:center; font-family:'Cairo',sans-serif; direction:rtl; }
+.confirm-box h3 { color:#dc2626; margin:0 0 10px; }
+.confirm-box p { color:#6b7280; font-size:0.9rem; margin-bottom:20px; }
+.confirm-btns { display:flex; gap:10px; justify-content:center; }
+.confirm-yes { background:#ef4444; color:white; border:none; padding:10px 24px; border-radius:9px; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer; }
+.confirm-no  { background:#f3f4f6; color:#374151; border:none; padding:10px 24px; border-radius:9px; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer; }
+
 </style>
 </head>
 <body>
@@ -581,21 +620,14 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>👨‍🏫 المعلمون | Teaching Staff</h1><p>الكادر التعليمي لمدرسة الجود — العام الدراسي 2025-2026</p></div>
         <i class="fas fa-chalkboard-teacher page-header-icon"></i>
       </div>
-      <div class="teachers-grid">
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلمة التربية الإسلامية</div><div class="teacher-subject">التربية الإسلامية</div><div class="teacher-tag">متوسط المادة: 87.9%</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلمة اللغة العربية</div><div class="teacher-subject">اللغة العربية</div><div class="teacher-tag">متوسط المادة: 82.9%</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلمة الدراسات الاجتماعية</div><div class="teacher-subject">الدراسات الاجتماعية</div><div class="teacher-tag">متوسط المادة: 89.2% 🏆</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلم اللغة الإنجليزية</div><div class="teacher-subject">اللغة الإنجليزية</div><div class="teacher-tag">متوسط المادة: 80.8%</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلم الرياضيات</div><div class="teacher-subject">الرياضيات</div><div class="teacher-tag">متوسط المادة: 80.8%</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلم العلوم</div><div class="teacher-subject">العلوم</div><div class="teacher-tag">متوسط المادة: 81.9%</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">المرشد الطلابي</div><div class="teacher-subject">الإرشاد الطلابي</div><div class="teacher-tag">دعم نفسي واجتماعي</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-tie"></i></div><div class="teacher-name">معلمة التربية البدنية</div><div class="teacher-subject">التربية البدنية</div><div class="teacher-tag">الأنشطة الرياضية</div></div>
+      <div id="teachers-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('teachers')"><i class="fas fa-plus"></i> إضافة معلم / معلمة</button>
       </div>
+      <div class="teachers-grid" id="teachers-grid"></div>
       <div class="card" style="margin-top:20px">
         <div class="card-title"><i class="fas fa-info-circle"></i> ملاحظة للمعلمين</div>
         <p style="color:#718096;font-size:0.9rem;line-height:1.8">
-          لتحديث بيانات المعلمين وإضافة معلومات التواصل والتخصصات، يرجى التواصل مع مدير النظام. 
-          يمكن إضافة الصور الشخصية وبيانات الدرجات العلمية وساعات الدوام.
+          يمكن لمدير النظام إضافة وتعديل وحذف بيانات المعلمين مباشرةً من خلال الأزرار الظاهرة في كل بطاقة.
         </p>
       </div>
     </div>
@@ -644,19 +676,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>🏢 الإدارة المدرسية</h1><p>فريق إدارة مدرسة الجود</p></div>
         <i class="fas fa-building page-header-icon"></i>
       </div>
-      <div class="teachers-grid">
-        <div class="teacher-card" style="background:linear-gradient(135deg,#0a1628,#1a2d4a);color:white">
-          <div class="teacher-avatar" style="background:rgba(201,162,39,0.2)"><i class="fas fa-crown" style="color:var(--accent)"></i></div>
-          <div class="teacher-name" style="color:var(--accent)">مديرة المدرسة</div>
-          <div class="teacher-subject" style="color:rgba(255,255,255,0.7)">الإشراف العام</div>
-          <div class="teacher-tag">إدارة المدرسة</div>
-        </div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-user-cog"></i></div><div class="teacher-name">نائب المدير</div><div class="teacher-subject">الشؤون التعليمية</div><div class="teacher-tag">المناهج والتقييم</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-tasks"></i></div><div class="teacher-name">منسق الجودة</div><div class="teacher-subject">الجودة والاعتماد</div><div class="teacher-tag">معايير التميز</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-laptop"></i></div><div class="teacher-name">منسق التقنية</div><div class="teacher-subject">تقنية المعلومات</div><div class="teacher-tag">الدعم التقني</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-heart"></i></div><div class="teacher-name">أخصائي التوجيه</div><div class="teacher-subject">الإرشاد الطلابي</div><div class="teacher-tag">الدعم النفسي</div></div>
-        <div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-file-alt"></i></div><div class="teacher-name">السكرتارية</div><div class="teacher-subject">الشؤون الإدارية</div><div class="teacher-tag">الوثائق الرسمية</div></div>
+      <div id="administration-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('administration')"><i class="fas fa-plus"></i> إضافة فرد إداري</button>
       </div>
+      <div class="teachers-grid" id="administration-grid"></div>
       <div class="card" style="margin-top:20px">
         <div class="card-title"><i class="fas fa-phone"></i> معلومات التواصل</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;font-size:0.88rem;color:#718096">
@@ -715,16 +738,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>🏆 الإنجازات المدرسية</h1><p>إنجازات وتميز مدرسة الجود</p></div>
         <i class="fas fa-trophy page-header-icon"></i>
       </div>
-      <div class="achieve-grid">
-        <div class="achieve-card"><div class="achieve-icon">🥇</div><div class="achieve-title">نسبة نجاح 100%</div><div class="achieve-desc">تحقيق نسبة نجاح كاملة في الفصل الدراسي الثاني لجميع الصفوف من الأول إلى الثامن</div></div>
-        <div class="achieve-card"><div class="achieve-icon">📈</div><div class="achieve-title">معدل عام 83.9%</div><div class="achieve-desc">تحقيق معدل عام مميز للمدرسة بالفصل الثاني يعكس مستوى أكاديمياً رفيعاً</div></div>
-        <div class="achieve-card"><div class="achieve-icon">⭐</div><div class="achieve-title">23.4% متفوقون</div><div class="achieve-desc">أكثر من 215 طالب وطالبة من إجمالي 920 حققوا مستوى التفوق في الفصل الثاني</div></div>
-        <div class="achieve-card"><div class="achieve-icon">🌟</div><div class="achieve-title">أفضل أداء ص4</div><div class="achieve-desc">الصف الرابع حقق أعلى معدل بين جميع الصفوف بمتوسط 87.3%</div></div>
-        <div class="achieve-card"><div class="achieve-icon">📚</div><div class="achieve-title">التميز في الدراسات</div><div class="achieve-desc">الدراسات الاجتماعية كانت أقوى مادة في المدرسة بمتوسط 89.2%</div></div>
-        <div class="achieve-card"><div class="achieve-icon">🏫</div><div class="achieve-title">بيئة تعليمية متميزة</div><div class="achieve-desc">مدرسة الجود تسعى نحو التميز والحصول على أعلى تقييمات في منطقة أبوظبي</div></div>
-        <div class="achieve-card"><div class="achieve-icon">💻</div><div class="achieve-title">التحول الرقمي</div><div class="achieve-desc">تبني المدرسة لأحدث منصات التعلم الإلكتروني ودمجها في العملية التعليمية</div></div>
-        <div class="achieve-card"><div class="achieve-icon">🤝</div><div class="achieve-title">شراكة مجتمعية</div><div class="achieve-desc">تعاون وثيق مع أولياء الأمور والمجتمع المحلي لدعم العملية التعليمية</div></div>
+      <div id="achievements-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('achievements')"><i class="fas fa-plus"></i> إضافة إنجاز جديد</button>
       </div>
+      <div class="achieve-grid" id="achievements-grid"></div>
     </div>
 
     <!-- ===== EVENTS ===== -->
@@ -733,16 +750,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>📅 الفعاليات المدرسية</h1><p>الفعاليات والأحداث المنجزة — العام الدراسي 2025-2026</p></div>
         <i class="fas fa-calendar-check page-header-icon"></i>
       </div>
-      <div class="events-grid">
-        <div class="event-card"><div class="event-banner gold"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> سبتمبر 2025</div><div class="event-title">🎒 حفل افتتاح العام الدراسي</div><div class="event-desc">احتفال بافتتاح العام الدراسي الجديد وترحيب بجميع الطلاب والكادر التعليمي</div></div></div>
-        <div class="event-card"><div class="event-banner blue"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> أكتوبر 2025</div><div class="event-title">🇦🇪 اليوم الوطني الإماراتي</div><div class="event-desc">احتفالات اليوم الوطني الـ 54 للإمارات العربية المتحدة مع فعاليات وطنية متنوعة</div></div></div>
-        <div class="event-card"><div class="event-banner green"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> نوفمبر 2025</div><div class="event-title">📖 أسبوع الفصاحة العربية</div><div class="event-desc">أسبوع خاص للاحتفاء باللغة العربية مع مسابقات الإلقاء والكتابة الإبداعية</div></div></div>
-        <div class="event-card"><div class="event-banner gold"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> ديسمبر 2025</div><div class="event-title">🔬 معرض العلوم</div><div class="event-desc">معرض المشاريع العلمية السنوي لطلاب الصفوف الرابع حتى الثامن</div></div></div>
-        <div class="event-card"><div class="event-banner blue"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> يناير 2026</div><div class="event-title">📊 توزيع نتائج الفصل الأول</div><div class="event-desc">توزيع شهادات نتائج الفصل الدراسي الأول واجتماع أولياء الأمور</div></div></div>
-        <div class="event-card"><div class="event-banner green"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> فبراير 2026</div><div class="event-title">♟️ بطولة الشطرنج</div><div class="event-desc">بطولة الشطرنج المدرسية السنوية لتنمية مهارات التفكير الاستراتيجي</div></div></div>
-        <div class="event-card"><div class="event-banner gold"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> مارس 2026</div><div class="event-title">🌍 يوم الحماية البيئية</div><div class="event-desc">فعاليات توعوية بيئية وزرع الأشجار بمشاركة الطلاب والمعلمين</div></div></div>
-        <div class="event-card"><div class="event-banner blue"></div><div class="event-body"><div class="event-date"><i class="fas fa-calendar"></i> مارس 2026</div><div class="event-title">📚 معرض الكتاب المدرسي</div><div class="event-desc">معرض للكتب والقراءة لتشجيع ثقافة القراءة لدى الطلاب</div></div></div>
+      <div id="events-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('events')"><i class="fas fa-plus"></i> إضافة فعالية جديدة</button>
       </div>
+      <div class="events-grid" id="events-grid"></div>
     </div>
 
     <!-- ===== UPCOMING EVENTS ===== -->
@@ -751,14 +762,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>📆 الفعاليات القادمة</h1><p>جدول الفعاليات المخطط لها خلال الفصل الثاني وما بعده</p></div>
         <i class="fas fa-calendar-plus page-header-icon"></i>
       </div>
-      <div class="events-grid">
-        <div class="event-card"><div class="event-banner gold"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> أبريل 2026</div><div class="event-title">🏃 اليوم الرياضي المدرسي</div><div class="event-desc">بطولات رياضية ومسابقات بين الصفوف في ألعاب متنوعة</div></div></div>
-        <div class="event-card"><div class="event-banner blue"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> أبريل 2026</div><div class="event-title">🎨 مهرجان الفنون</div><div class="event-desc">عرض أعمال الطلاب الفنية والإبداعية في حفل خاص</div></div></div>
-        <div class="event-card"><div class="event-banner green"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> مايو 2026</div><div class="event-title">📝 الاختبارات النهائية الفصل الثاني</div><div class="event-desc">بداية فترة الاختبارات النهائية للفصل الدراسي الثاني</div></div></div>
-        <div class="event-card"><div class="event-banner gold"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> مايو 2026</div><div class="event-title">🎓 يوم التخرج</div><div class="event-desc">حفل تخريج طلاب الصف الثامن والاحتفاء بإنجازاتهم</div></div></div>
-        <div class="event-card"><div class="event-banner blue"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> يونيو 2026</div><div class="event-title">🏆 حفل توزيع الجوائز</div><div class="event-desc">تكريم الطلاب المتفوقين وذوي الإنجازات المميزة في الفصل الثاني</div></div></div>
-        <div class="event-card"><div class="event-banner green"></div><div class="event-body"><div class="event-date"><i class="fas fa-clock"></i> يونيو 2026</div><div class="event-title">📊 اجتماع التقييم السنوي</div><div class="event-desc">اجتماع الهيئة التعليمية لتقييم العام الدراسي والتخطيط للعام القادم</div></div></div>
+      <div id="upcoming-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('upcoming')"><i class="fas fa-plus"></i> إضافة فعالية قادمة</button>
       </div>
+      <div class="events-grid" id="upcoming-grid"></div>
     </div>
 
     <!-- ===== PROJECTS ===== -->
@@ -767,14 +774,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="page-header-text"><h1>🔬 المشاريع المدرسية</h1><p>مشاريع وإنجازات طلاب مدرسة الجود</p></div>
         <i class="fas fa-flask page-header-icon"></i>
       </div>
-      <div class="projects-grid">
-        <div class="project-card"><div class="project-header"><div class="project-emoji">🌱</div><div class="project-title">مشروع الطاقة الشمسية</div></div><div class="project-body"><div class="project-grade">الصفوف 7-8</div><div class="project-desc">تصميم نموذج لتوليد الكهرباء من الطاقة الشمسية باستخدام خلايا شمسية</div></div></div>
-        <div class="project-card"><div class="project-header"><div class="project-emoji">🤖</div><div class="project-title">مشروع البرمجة والروبوتيكس</div></div><div class="project-body"><div class="project-grade">الصفوف 5-8</div><div class="project-desc">تعليم أساسيات البرمجة وبناء روبوتات بسيطة باستخدام منصة Scratch</div></div></div>
-        <div class="project-card"><div class="project-header"><div class="project-emoji">💧</div><div class="project-title">مشروع الحفاظ على المياه</div></div><div class="project-body"><div class="project-grade">الصفوف 4-6</div><div class="project-desc">دراسة طرق ترشيد استهلاك المياه في الإمارات وتقديم حلول ابتكارية</div></div></div>
-        <div class="project-card"><div class="project-header"><div class="project-emoji">📖</div><div class="project-title">مشروع التراث الإماراتي</div></div><div class="project-body"><div class="project-grade">الصفوف 1-4</div><div class="project-desc">توثيق العادات والتقاليد الإماراتية من خلال مقابلات مع كبار السن والتوثيق</div></div></div>
-        <div class="project-card"><div class="project-header"><div class="project-emoji">🌍</div><div class="project-title">حديقة مدرستي الخضراء</div></div><div class="project-body"><div class="project-grade">جميع الصفوف</div><div class="project-desc">مشروع لإنشاء حديقة مدرسية وزراعة النباتات المحلية والعناية بها</div></div></div>
-        <div class="project-card"><div class="project-header"><div class="project-emoji">🎥</div><div class="project-title">مشروع الإعلام المدرسي</div></div><div class="project-body"><div class="project-grade">الصفوف 6-8</div><div class="project-desc">إنتاج مقاطع فيديو تعليمية وتوثيق الفعاليات المدرسية بشكل احترافي</div></div></div>
+      <div id="projects-add-bar" class="crud-add-bar" style="display:none">
+        <button class="crud-add-btn" onclick="openModal('projects')"><i class="fas fa-plus"></i> إضافة مشروع جديد</button>
       </div>
+      <div class="projects-grid" id="projects-grid"></div>
     </div>
 
     <!-- ===== DOCUMENTS ===== -->
@@ -821,7 +824,46 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     .res-btn .res-name { font-size:0.78rem; color:#888; }
     .res-btn:hover .res-name { color:rgba(255,255,255,0.7); }
     @media(max-width:600px){ .res-grid { grid-template-columns:repeat(2,1fr); } }
-  </style>
+  
+/* ===== CRUD STYLES ===== */
+.crud-add-bar { display:flex; justify-content:flex-end; margin-bottom:18px; }
+.crud-add-btn { background:linear-gradient(135deg,var(--accent),#e8b830); color:var(--primary); border:none; padding:10px 22px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 3px 12px rgba(201,162,39,0.4); transition:all 0.2s; }
+.crud-add-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(201,162,39,0.5); }
+.card-crud-actions { display:none; position:absolute; top:10px; left:10px; gap:6px; z-index:10; }
+.card-crud-actions.visible { display:flex; }
+.crud-edit-btn, .crud-del-btn { border:none; border-radius:7px; padding:5px 10px; font-size:0.78rem; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; transition:all 0.2s; }
+.crud-edit-btn { background:#3b82f6; color:white; }
+.crud-del-btn  { background:#ef4444; color:white; }
+.crud-edit-btn:hover { background:#2563eb; }
+.crud-del-btn:hover  { background:#dc2626; }
+.teacher-card, .event-card, .achieve-card, .project-card { position:relative; }
+
+/* ===== MODAL ===== */
+.crud-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+.crud-modal-overlay.open { display:flex; }
+.crud-modal { background:white; border-radius:18px; padding:32px; width:90%; max-width:560px; max-height:85vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); font-family:'Cairo',sans-serif; direction:rtl; }
+.crud-modal h2 { color:var(--primary); font-size:1.3rem; margin:0 0 24px; display:flex; align-items:center; gap:10px; }
+.crud-modal h2 span { font-size:1.6rem; }
+.form-group { margin-bottom:16px; }
+.form-group label { display:block; font-size:0.88rem; font-weight:700; color:#374151; margin-bottom:6px; }
+.form-group input, .form-group textarea, .form-group select { width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:10px; font-family:'Cairo',sans-serif; font-size:0.9rem; transition:border 0.2s; box-sizing:border-box; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--accent); outline:none; }
+.form-group textarea { min-height:80px; resize:vertical; }
+.modal-btns { display:flex; gap:12px; margin-top:24px; justify-content:flex-end; }
+.modal-save-btn { background:linear-gradient(135deg,var(--accent),#e8b830); color:var(--primary); border:none; padding:11px 28px; border-radius:10px; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; }
+.modal-cancel-btn { background:#f3f4f6; color:#374151; border:none; padding:11px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; }
+.modal-save-btn:hover { opacity:0.9; }
+.modal-cancel-btn:hover { background:#e5e7eb; }
+.confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; align-items:center; justify-content:center; }
+.confirm-overlay.open { display:flex; }
+.confirm-box { background:white; border-radius:16px; padding:28px; width:340px; text-align:center; font-family:'Cairo',sans-serif; direction:rtl; }
+.confirm-box h3 { color:#dc2626; margin:0 0 10px; }
+.confirm-box p { color:#6b7280; font-size:0.9rem; margin-bottom:20px; }
+.confirm-btns { display:flex; gap:10px; justify-content:center; }
+.confirm-yes { background:#ef4444; color:white; border:none; padding:10px 24px; border-radius:9px; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer; }
+.confirm-no  { background:#f3f4f6; color:#374151; border:none; padding:10px 24px; border-radius:9px; font-family:'Cairo',sans-serif; font-weight:700; cursor:pointer; }
+
+</style>
 
   <!-- Distance Learning -->
   <div class="res-category">
@@ -948,7 +990,8 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <table class="data-table">
           <thead><tr><th>نوع المستخدم</th><th>كلمة المرور الحالية</th><th>مستوى الوصول</th></tr></thead>
           <tbody>
-            <tr><td><strong>مدير النظام (Admin)</strong></td><td>AlJood@2026</td><td><span class="grade-badge grade-a">وصول كامل</span></td></tr>
+            <tr><td><strong>مدير النظام (Admin)</strong></td><td>AlJood@2026</td><td><span class="grade-badge grade-a">وصول كامل + تعديل</span></td></tr>
+            <tr><td><strong>المديرة (Principal)</strong></td><td>Principal2026</td><td><span class="grade-badge grade-a">وصول كامل — قراءة فقط</span></td></tr>
             <tr><td><strong>المعلمون (Teacher)</strong></td><td>Teacher2026</td><td><span class="grade-badge grade-b">موارد المعلمين</span></td></tr>
             <tr><td><strong>الإداريون (Staff)</strong></td><td>Staff2026</td><td><span class="grade-badge grade-c">الإدارة فقط</span></td></tr>
             <tr><td><strong>أولياء الأمور (Parent)</strong></td><td>Parent2026</td><td><span class="grade-badge" style="background:#e8d5ff;color:#553c9a">بوابة الأولياء</span></td></tr>
@@ -980,7 +1023,8 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 <script>
 // ===== PASSWORDS & ROLES =====
 const PASSWORDS = {
-  'AlJood@2026': { role: 'admin', name: 'نور يم — مديرة النظام', roleLabel: '👑 Admin | المدير' },
+  'AlJood@2026':   { role: 'admin',      name: 'نور يم — مديرة النظام',  roleLabel: '👑 Admin | المدير' },
+  'Principal2026': { role: 'principal', name: 'مديرة المدرسة — Principal', roleLabel: '🏫 Principal | المديرة' },
   'Teacher2026': { role: 'teacher', name: 'معلم / معلمة', roleLabel: '📚 معلم | Teacher' },
   'Staff2026':   { role: 'staff',   name: 'موظف إداري', roleLabel: '🏢 إداري | Staff' },
   'Parent2026':  { role: 'parent',  name: 'ولي أمر', roleLabel: '❤️ ولي الأمر | Parent' }
@@ -1003,7 +1047,8 @@ function doLogin() {
     currentRole = user.role;
     document.getElementById('userNameDisplay').textContent = user.name;
     document.getElementById('userRoleDisplay').textContent = user.roleLabel;
-    if (user.role === 'admin') document.getElementById('adminMenu').style.display = 'block';
+    if (user.role === 'admin' || user.role === 'principal') document.getElementById('adminMenu').style.display = 'block';
+    setTimeout(() => renderAllSections(), 100);
     initCharts();
     updateDate();
   } else {
@@ -1122,6 +1167,363 @@ function filterStudents() {
     row.style.display = (matchSearch && matchGrade) ? '' : 'none';
   });
 }
+
+
+// ===== CRUD SYSTEM =====
+// isAdmin: ONLY admin role gets add/edit/delete. Principal is read-only.
+function isAdmin() { return currentRole === 'admin'; }
+// isPrivileged: both admin and principal see full sections (data rendered)
+function isPrivileged() { return currentRole === 'admin' || currentRole === 'principal'; }
+
+// ── Default Data ──────────────────────────────────────────────────────────
+const DEFAULTS = {
+  teachers: [
+    { name:'معلمة التربية الإسلامية', subject:'التربية الإسلامية', tag:'متوسط المادة: 87.9%', icon:'fas fa-user-tie' },
+    { name:'معلمة اللغة العربية', subject:'اللغة العربية', tag:'متوسط المادة: 82.9%', icon:'fas fa-user-tie' },
+    { name:'معلمة الدراسات الاجتماعية', subject:'الدراسات الاجتماعية', tag:'متوسط المادة: 89.2% 🏆', icon:'fas fa-user-tie' },
+    { name:'معلم اللغة الإنجليزية', subject:'اللغة الإنجليزية', tag:'متوسط المادة: 80.8%', icon:'fas fa-user-tie' },
+    { name:'معلم الرياضيات', subject:'الرياضيات', tag:'متوسط المادة: 80.8%', icon:'fas fa-user-tie' },
+    { name:'معلم العلوم', subject:'العلوم', tag:'متوسط المادة: 81.9%', icon:'fas fa-user-tie' },
+    { name:'المرشد الطلابي', subject:'الإرشاد الطلابي', tag:'دعم نفسي واجتماعي', icon:'fas fa-user-tie' },
+    { name:'معلمة التربية البدنية', subject:'التربية البدنية', tag:'الأنشطة الرياضية', icon:'fas fa-user-tie' }
+  ],
+  administration: [
+    { name:'مديرة المدرسة', subject:'الإشراف العام', tag:'إدارة المدرسة', icon:'fas fa-crown', highlight:true },
+    { name:'نائب المدير', subject:'الشؤون التعليمية', tag:'المناهج والتقييم', icon:'fas fa-user-cog' },
+    { name:'منسق الجودة', subject:'الجودة والاعتماد', tag:'معايير التميز', icon:'fas fa-tasks' },
+    { name:'منسق التقنية', subject:'تقنية المعلومات', tag:'الدعم التقني', icon:'fas fa-laptop' },
+    { name:'أخصائي التوجيه', subject:'الإرشاد الطلابي', tag:'الدعم النفسي', icon:'fas fa-heart' },
+    { name:'السكرتارية', subject:'الشؤون الإدارية', tag:'الوثائق الرسمية', icon:'fas fa-file-alt' }
+  ],
+  achievements: [
+    { icon:'🥇', title:'نسبة نجاح 100%', desc:'تحقيق نسبة نجاح كاملة في الفصل الدراسي الثاني لجميع الصفوف من الأول إلى الثامن' },
+    { icon:'📈', title:'معدل عام 83.9%', desc:'تحقيق معدل عام مميز للمدرسة بالفصل الثاني يعكس مستوى أكاديمياً رفيعاً' },
+    { icon:'⭐', title:'23.4% متفوقون', desc:'أكثر من 215 طالب وطالبة من إجمالي 920 حققوا مستوى التفوق في الفصل الثاني' },
+    { icon:'🌟', title:'أفضل أداء ص4', desc:'الصف الرابع حقق أعلى معدل بين جميع الصفوف بمتوسط 87.3%' },
+    { icon:'📚', title:'التميز في الدراسات', desc:'الدراسات الاجتماعية كانت أقوى مادة في المدرسة بمتوسط 89.2%' },
+    { icon:'🏫', title:'بيئة تعليمية متميزة', desc:'مدرسة الجود تسعى نحو التميز والحصول على أعلى تقييمات في منطقة أبوظبي' },
+    { icon:'💻', title:'التحول الرقمي', desc:'تبني المدرسة لأحدث منصات التعلم الإلكتروني ودمجها في العملية التعليمية' },
+    { icon:'🤝', title:'شراكة مجتمعية', desc:'تعاون وثيق مع أولياء الأمور والمجتمع المحلي لدعم العملية التعليمية' }
+  ],
+  events: [
+    { color:'gold', date:'سبتمبر 2025', title:'🎒 حفل افتتاح العام الدراسي', desc:'احتفال بافتتاح العام الدراسي الجديد وترحيب بجميع الطلاب والكادر التعليمي' },
+    { color:'blue', date:'أكتوبر 2025', title:'🇦🇪 اليوم الوطني الإماراتي', desc:'احتفالات اليوم الوطني الـ 54 للإمارات العربية المتحدة مع فعاليات وطنية متنوعة' },
+    { color:'green', date:'نوفمبر 2025', title:'📖 أسبوع الفصاحة العربية', desc:'أسبوع خاص للاحتفاء باللغة العربية مع مسابقات الإلقاء والكتابة الإبداعية' },
+    { color:'gold', date:'ديسمبر 2025', title:'🔬 معرض العلوم', desc:'معرض المشاريع العلمية السنوي لطلاب الصفوف الرابع حتى الثامن' },
+    { color:'blue', date:'يناير 2026', title:'📊 توزيع نتائج الفصل الأول', desc:'توزيع شهادات نتائج الفصل الدراسي الأول واجتماع أولياء الأمور' },
+    { color:'green', date:'فبراير 2026', title:'♟️ بطولة الشطرنج', desc:'بطولة الشطرنج المدرسية السنوية لتنمية مهارات التفكير الاستراتيجي' },
+    { color:'gold', date:'مارس 2026', title:'🌍 يوم الحماية البيئية', desc:'فعاليات توعوية بيئية وزرع الأشجار بمشاركة الطلاب والمعلمين' },
+    { color:'blue', date:'مارس 2026', title:'📚 معرض الكتاب المدرسي', desc:'معرض للكتب والقراءة لتشجيع ثقافة القراءة لدى الطلاب' }
+  ],
+  upcoming: [
+    { color:'gold', date:'أبريل 2026', title:'🏃 اليوم الرياضي المدرسي', desc:'بطولات رياضية ومسابقات بين الصفوف في ألعاب متنوعة' },
+    { color:'blue', date:'أبريل 2026', title:'🎨 مهرجان الفنون', desc:'عرض أعمال الطلاب الفنية والإبداعية في حفل خاص' },
+    { color:'green', date:'مايو 2026', title:'📝 الاختبارات النهائية الفصل الثاني', desc:'بداية فترة الاختبارات النهائية للفصل الدراسي الثاني' },
+    { color:'gold', date:'مايو 2026', title:'🎓 يوم التخرج', desc:'حفل تخريج طلاب الصف الثامن والاحتفاء بإنجازاتهم' },
+    { color:'blue', date:'يونيو 2026', title:'🏆 حفل توزيع الجوائز', desc:'تكريم الطلاب المتفوقين وذوي الإنجازات المميزة في الفصل الثاني' },
+    { color:'green', date:'يونيو 2026', title:'📊 اجتماع التقييم السنوي', desc:'اجتماع الهيئة التعليمية لتقييم العام الدراسي والتخطيط للعام القادم' }
+  ],
+  projects: [
+    { emoji:'🌱', title:'مشروع الطاقة الشمسية', grade:'الصفوف 7-8', desc:'تصميم نموذج لتوليد الكهرباء من الطاقة الشمسية باستخدام خلايا شمسية' },
+    { emoji:'🤖', title:'مشروع البرمجة والروبوتيكس', grade:'الصفوف 5-8', desc:'تعليم أساسيات البرمجة وبناء روبوتات بسيطة باستخدام منصة Scratch' },
+    { emoji:'💧', title:'مشروع الحفاظ على المياه', grade:'الصفوف 4-6', desc:'دراسة طرق ترشيد استهلاك المياه في الإمارات وتقديم حلول ابتكارية' },
+    { emoji:'📖', title:'مشروع التراث الإماراتي', grade:'الصفوف 1-4', desc:'توثيق العادات والتقاليد الإماراتية من خلال مقابلات مع كبار السن والتوثيق' },
+    { emoji:'🌍', title:'حديقة مدرستي الخضراء', grade:'جميع الصفوف', desc:'مشروع لإنشاء حديقة مدرسية وزراعة النباتات المحلية والعناية بها' },
+    { emoji:'🎥', title:'مشروع الإعلام المدرسي', grade:'الصفوف 6-8', desc:'إنتاج مقاطع فيديو تعليمية وتوثيق الفعاليات المدرسية بشكل احترافي' }
+  ]
+};
+
+// ── Load / Save ──────────────────────────────────────────────────────────
+function loadData(key) {
+  try {
+    const s = localStorage.getItem('ajood_' + key);
+    return s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULTS[key]));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULTS[key])); }
+}
+function saveData(key, data) {
+  localStorage.setItem('ajood_' + key, JSON.stringify(data));
+}
+
+// ── Render All ────────────────────────────────────────────────────────────
+function renderAllSections() {
+  renderTeachers();
+  renderAdministration();
+  renderAchievements();
+  renderEvents();
+  renderUpcoming();
+  renderProjects();
+  // Show Add buttons ONLY for admin (not principal)
+  ['teachers','administration','achievements','events','upcoming','projects'].forEach(s => {
+    const bar = document.getElementById(s + '-add-bar');
+    if (bar) bar.style.display = isAdmin() ? 'flex' : 'none';
+  });
+}
+
+// crudBtns: only rendered for admin role
+function crudBtns(section, idx) {
+  if (!isAdmin()) return '';
+  return `<div class="card-crud-actions visible">
+    <button class="crud-edit-btn" onclick="event.stopPropagation();openModal('${section}',${idx})"><i class="fas fa-pen"></i></button>
+    <button class="crud-del-btn" onclick="event.stopPropagation();askDelete('${section}',${idx})"><i class="fas fa-trash"></i></button>
+  </div>`;
+}
+
+// ── Teachers ──────────────────────────────────────────────────────────────
+function renderTeachers() {
+  const data = loadData('teachers');
+  const grid = document.getElementById('teachers-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((t, i) => `
+    <div class="teacher-card">
+      ${crudBtns('teachers', i)}
+      <div class="teacher-avatar"><i class="${t.icon || 'fas fa-user-tie'}"></i></div>
+      <div class="teacher-name">${t.name}</div>
+      <div class="teacher-subject">${t.subject}</div>
+      <div class="teacher-tag">${t.tag}</div>
+    </div>`).join('');
+}
+
+// ── Administration ────────────────────────────────────────────────────────
+function renderAdministration() {
+  const data = loadData('administration');
+  const grid = document.getElementById('administration-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((a, i) => {
+    const hl = a.highlight ? 'background:linear-gradient(135deg,#0a1628,#1a2d4a);color:white' : '';
+    const nameStyle = a.highlight ? 'color:var(--accent)' : '';
+    const subStyle = a.highlight ? 'color:rgba(255,255,255,0.7)' : '';
+    const iconStyle = a.highlight ? 'color:var(--accent)' : '';
+    const avatarStyle = a.highlight ? 'background:rgba(201,162,39,0.2)' : '';
+    return `<div class="teacher-card" style="${hl}">
+      ${crudBtns('administration', i)}
+      <div class="teacher-avatar" style="${avatarStyle}"><i class="${a.icon || 'fas fa-user-tie'}" style="${iconStyle}"></i></div>
+      <div class="teacher-name" style="${nameStyle}">${a.name}</div>
+      <div class="teacher-subject" style="${subStyle}">${a.subject}</div>
+      <div class="teacher-tag">${a.tag}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Achievements ──────────────────────────────────────────────────────────
+function renderAchievements() {
+  const data = loadData('achievements');
+  const grid = document.getElementById('achievements-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((a, i) => `
+    <div class="achieve-card">
+      ${crudBtns('achievements', i)}
+      <div class="achieve-icon">${a.icon}</div>
+      <div class="achieve-title">${a.title}</div>
+      <div class="achieve-desc">${a.desc}</div>
+    </div>`).join('');
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+function renderEvents() {
+  const data = loadData('events');
+  const grid = document.getElementById('events-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((e, i) => `
+    <div class="event-card">
+      ${crudBtns('events', i)}
+      <div class="event-banner ${e.color || 'gold'}"></div>
+      <div class="event-body">
+        <div class="event-date"><i class="fas fa-calendar"></i> ${e.date}</div>
+        <div class="event-title">${e.title}</div>
+        <div class="event-desc">${e.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Upcoming ──────────────────────────────────────────────────────────────
+function renderUpcoming() {
+  const data = loadData('upcoming');
+  const grid = document.getElementById('upcoming-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((e, i) => `
+    <div class="event-card">
+      ${crudBtns('upcoming', i)}
+      <div class="event-banner ${e.color || 'gold'}"></div>
+      <div class="event-body">
+        <div class="event-date"><i class="fas fa-clock"></i> ${e.date}</div>
+        <div class="event-title">${e.title}</div>
+        <div class="event-desc">${e.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Projects ──────────────────────────────────────────────────────────────
+function renderProjects() {
+  const data = loadData('projects');
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  grid.innerHTML = data.map((p, i) => `
+    <div class="project-card">
+      ${crudBtns('projects', i)}
+      <div class="project-header">
+        <div class="project-emoji">${p.emoji}</div>
+        <div class="project-title">${p.title}</div>
+      </div>
+      <div class="project-body">
+        <div class="project-grade">${p.grade}</div>
+        <div class="project-desc">${p.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Modal System ──────────────────────────────────────────────────────────
+let _modalSection = '';
+let _modalIdx = -1;
+
+const MODAL_CONFIG = {
+  teachers: {
+    emoji: '👩\u200d🏫', title: 'معلم / معلمة',
+    fields: [
+      { key:'name', label:'الاسم الكامل', type:'text', placeholder:'مثال: معلمة اللغة العربية' },
+      { key:'subject', label:'المادة / التخصص', type:'text', placeholder:'مثال: اللغة العربية' },
+      { key:'tag', label:'ملاحظة / متوسط المادة', type:'text', placeholder:'مثال: متوسط المادة: 85%' }
+    ],
+    defaults: { name:'', subject:'', tag:'', icon:'fas fa-user-tie' }
+  },
+  administration: {
+    emoji: '🏛️', title: 'فرد إداري',
+    fields: [
+      { key:'name', label:'الاسم / المنصب', type:'text', placeholder:'مثال: نائب المدير' },
+      { key:'subject', label:'القسم / الاختصاص', type:'text', placeholder:'مثال: الشؤون التعليمية' },
+      { key:'tag', label:'المهام', type:'text', placeholder:'مثال: المناهج والتقييم' }
+    ],
+    defaults: { name:'', subject:'', tag:'', icon:'fas fa-user-tie' }
+  },
+  achievements: {
+    emoji: '🏆', title: 'إنجاز مدرسي',
+    fields: [
+      { key:'icon', label:'رمز تعبيري (Emoji)', type:'text', placeholder:'مثال: 🥇' },
+      { key:'title', label:'عنوان الإنجاز', type:'text', placeholder:'مثال: نسبة نجاح 100%' },
+      { key:'desc', label:'وصف الإنجاز', type:'textarea', placeholder:'وصف تفصيلي للإنجاز...' }
+    ],
+    defaults: { icon:'⭐', title:'', desc:'' }
+  },
+  events: {
+    emoji: '📅', title: 'فعالية مدرسية',
+    fields: [
+      { key:'title', label:'عنوان الفعالية', type:'text', placeholder:'مثال: 🎒 حفل افتتاح العام الدراسي' },
+      { key:'date', label:'التاريخ / الشهر', type:'text', placeholder:'مثال: سبتمبر 2025' },
+      { key:'desc', label:'وصف الفعالية', type:'textarea', placeholder:'تفاصيل الفعالية...' },
+      { key:'color', label:'لون البطاقة', type:'select', options:['gold','blue','green'] }
+    ],
+    defaults: { title:'', date:'', desc:'', color:'gold' }
+  },
+  upcoming: {
+    emoji: '📆', title: 'فعالية قادمة',
+    fields: [
+      { key:'title', label:'عنوان الفعالية', type:'text', placeholder:'مثال: 🏃 اليوم الرياضي' },
+      { key:'date', label:'التاريخ / الشهر', type:'text', placeholder:'مثال: أبريل 2026' },
+      { key:'desc', label:'وصف الفعالية', type:'textarea', placeholder:'تفاصيل الفعالية...' },
+      { key:'color', label:'لون البطاقة', type:'select', options:['gold','blue','green'] }
+    ],
+    defaults: { title:'', date:'', desc:'', color:'blue' }
+  },
+  projects: {
+    emoji: '🔬', title: 'مشروع مدرسي',
+    fields: [
+      { key:'emoji', label:'رمز تعبيري (Emoji)', type:'text', placeholder:'مثال: 🌱' },
+      { key:'title', label:'اسم المشروع', type:'text', placeholder:'مثال: مشروع الطاقة الشمسية' },
+      { key:'grade', label:'الصفوف المستهدفة', type:'text', placeholder:'مثال: الصفوف 7-8' },
+      { key:'desc', label:'وصف المشروع', type:'textarea', placeholder:'تفاصيل المشروع...' }
+    ],
+    defaults: { emoji:'🔬', title:'', grade:'', desc:'' }
+  }
+};
+
+function openModal(section, idx) {
+  if (!isAdmin()) return; // extra safety — only admin can open modal
+  _modalSection = section;
+  _modalIdx = (idx !== undefined) ? idx : -1;
+  const cfg = MODAL_CONFIG[section];
+  const data = loadData(section);
+  const item = (_modalIdx >= 0) ? data[_modalIdx] : {...cfg.defaults};
+  document.getElementById('modalEmoji').textContent = cfg.emoji;
+  document.getElementById('modalTitle').textContent = (_modalIdx >= 0 ? 'تعديل ' : 'إضافة ') + cfg.title;
+  let fieldsHtml = '';
+  cfg.fields.forEach(f => {
+    const val = item[f.key] || '';
+    if (f.type === 'textarea') {
+      fieldsHtml += `<div class="form-group"><label>${f.label}</label><textarea id="mf_${f.key}" placeholder="${f.placeholder}">${val}</textarea></div>`;
+    } else if (f.type === 'select') {
+      const opts = f.options.map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('');
+      fieldsHtml += `<div class="form-group"><label>${f.label}</label><select id="mf_${f.key}">${opts}</select></div>`;
+    } else {
+      fieldsHtml += `<div class="form-group"><label>${f.label}</label><input id="mf_${f.key}" type="text" value="${val}" placeholder="${f.placeholder}"></div>`;
+    }
+  });
+  document.getElementById('modalFormFields').innerHTML = fieldsHtml;
+  document.getElementById('crudModalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('crudModalOverlay').classList.remove('open');
+}
+
+function saveModal() {
+  if (!isAdmin()) return;
+  const cfg = MODAL_CONFIG[_modalSection];
+  const data = loadData(_modalSection);
+  const item = (_modalIdx >= 0) ? {...data[_modalIdx]} : {...cfg.defaults};
+  cfg.fields.forEach(f => {
+    const el = document.getElementById('mf_' + f.key);
+    if (el) item[f.key] = el.value.trim();
+  });
+  if (_modalIdx >= 0) {
+    data[_modalIdx] = item;
+  } else {
+    data.push(item);
+  }
+  saveData(_modalSection, data);
+  closeModal();
+  renderAllSections();
+}
+
+// ── Delete ────────────────────────────────────────────────────────────────
+let _delSection = '', _delIdx = -1;
+function askDelete(section, idx) {
+  if (!isAdmin()) return;
+  _delSection = section; _delIdx = idx;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function confirmDelete() {
+  if (!isAdmin()) return;
+  document.getElementById('confirmOverlay').classList.remove('open');
+  const data = loadData(_delSection);
+  data.splice(_delIdx, 1);
+  saveData(_delSection, data);
+  renderAllSections();
+}
+
 </script>
+
+<!-- ===== CRUD MODAL ===== -->
+<div class="crud-modal-overlay" id="crudModalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="crud-modal">
+    <h2><span id="modalEmoji">✏️</span> <span id="modalTitle">إضافة / تعديل</span></h2>
+    <div id="modalFormFields"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel-btn" onclick="closeModal()">إلغاء</button>
+      <button class="modal-save-btn" onclick="saveModal()"><i class="fas fa-save"></i> حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM DELETE ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3>🗑️ تأكيد الحذف</h3>
+    <p>هل أنت متأكد من حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.</p>
+    <div class="confirm-btns">
+      <button class="confirm-yes" onclick="confirmDelete()">نعم، احذف</button>
+      <button class="confirm-no" onclick="document.getElementById('confirmOverlay').classList.remove('open')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
