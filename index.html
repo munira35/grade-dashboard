@@ -986,17 +986,26 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="stat-card"><div class="stat-icon green"><i class="fas fa-door-open"></i></div><div><div class="stat-value">3</div><div class="stat-label">أنواع الوصول</div></div></div>
         <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-shield-alt"></i></div><div><div class="stat-value">آمن</div><div class="stat-label">حالة الأمان</div></div></div>
       </div>
+      <!-- Password Edit Modal -->
+      <div id="pwModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:16px;padding:32px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);direction:rtl;">
+          <h3 style="margin:0 0 8px;color:#1a1a2e;font-size:1.2rem;"><i class="fas fa-key" style="color:#c9a227;margin-left:8px;"></i> تعديل كلمة المرور</h3>
+          <p id="pwModalRole" style="color:#666;font-size:0.9rem;margin:0 0 20px;"></p>
+          <label style="font-size:0.85rem;color:#444;font-weight:600;">كلمة المرور الجديدة</label>
+          <input id="pwNewInput" type="text" style="width:100%;margin-top:6px;padding:10px 14px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box;direction:ltr;" placeholder="أدخل كلمة المرور الجديدة" />
+          <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+            <button onclick="closePwModal()" style="padding:10px 20px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:0.9rem;">إلغاء</button>
+            <button onclick="savePw()" style="padding:10px 24px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700;color:#1a1a2e;">💾 حفظ</button>
+          </div>
+          <div id="pwSaveMsg" style="display:none;margin-top:12px;padding:10px;background:#e8f5e9;border-radius:8px;color:#2e7d32;font-size:0.85rem;text-align:center;">✅ تم حفظ كلمة المرور بنجاح!</div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title"><i class="fas fa-key"></i> إدارة كلمات المرور</div>
-        <table class="data-table">
-          <thead><tr><th>نوع المستخدم</th><th>كلمة المرور الحالية</th><th>مستوى الوصول</th></tr></thead>
-          <tbody>
-            <tr><td><strong>مدير النظام (Admin)</strong></td><td>AlJood@2026</td><td><span class="grade-badge grade-a">وصول كامل + تعديل</span></td></tr>
-            <tr><td><strong>المديرة (Principal)</strong></td><td>Principal2026</td><td><span class="grade-badge grade-a">وصول كامل — قراءة فقط</span></td></tr>
-            <tr><td><strong>المعلمون (Teacher)</strong></td><td>Teacher2026</td><td><span class="grade-badge grade-b">موارد المعلمين</span></td></tr>
-            <tr><td><strong>الإداريون (Staff)</strong></td><td>Staff2026</td><td><span class="grade-badge grade-c">الإدارة فقط</span></td></tr>
-            <tr><td><strong>أولياء الأمور (Parent)</strong></td><td>Parent2026</td><td><span class="grade-badge" style="background:#e8d5ff;color:#553c9a">بوابة الأولياء</span></td></tr>
-          </tbody>
+        <table class="data-table" id="pwTable">
+          <thead><tr><th>نوع المستخدم</th><th>كلمة المرور الحالية</th><th>مستوى الوصول</th><th>تعديل</th></tr></thead>
+          <tbody id="pwTableBody"></tbody>
         </table>
         <div style="margin-top:15px;padding:12px;background:#fffbf0;border-radius:8px;border-right:4px solid var(--accent);font-size:0.85rem">
           <strong>⚠️ تنبيه أمني:</strong> يُنصح بتغيير كلمات المرور بشكل دوري. هذه البوابة مخصصة للاستخدام الداخلي للمدرسة.
@@ -1022,21 +1031,85 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 </div><!-- end app -->
 
 <script>
-// ===== PASSWORDS & ROLES =====
-const PASSWORDS = {
-  'AlJood@2026':   { role: 'admin',      name: 'نور يم — مديرة النظام',  roleLabel: '👑 Admin | المدير' },
-  'Principal2026': { role: 'principal', name: 'مديرة المدرسة — Principal', roleLabel: '🏫 Principal | المديرة' },
-  'Teacher2026': { role: 'teacher', name: 'معلم / معلمة', roleLabel: '📚 معلم | Teacher' },
-  'Staff2026':   { role: 'staff',   name: 'موظف إداري', roleLabel: '🏢 إداري | Staff' },
-  'Parent2026':  { role: 'parent',  name: 'ولي أمر', roleLabel: '❤️ ولي الأمر | Parent' }
+// ===== PASSWORD MANAGEMENT (Admin Panel) =====
+const defaultPasswords = {
+  'admin':     { label: 'مدير النظام (Admin)',      default: 'AlJood@2026',   badge: '<span class="grade-badge grade-a">وصول كامل + تعديل</span>' },
+  'principal': { label: 'المديرة (Principal)',       default: 'Principal2026', badge: '<span class="grade-badge grade-a">وصول كامل — قراءة فقط</span>' },
+  'teacher':   { label: 'المعلمون (Teacher)',        default: 'Teacher2026',   badge: '<span class="grade-badge grade-b">موارد المعلمين</span>' },
+  'staff':     { label: 'الإداريون (Staff)',         default: 'Staff2026',     badge: '<span class="grade-badge grade-c">الإدارة فقط</span>' },
+  'parent':    { label: 'أولياء الأمور (Parent)',    default: 'Parent2026',    badge: '<span class="grade-badge" style="background:#e8d5ff;color:#553c9a">بوابة الأولياء</span>' }
 };
+function getSavedPasswords() {
+  try { return JSON.parse(localStorage.getItem('aljood_passwords') || '{}'); } catch(e) { return {}; }
+}
+function getEffectivePassword(role) {
+  const saved = getSavedPasswords();
+  return saved[role] || defaultPasswords[role].default;
+}
+function renderPwTable() {
+  const tbody = document.getElementById('pwTableBody');
+  if (!tbody) return;
+  const saved = getSavedPasswords();
+  tbody.innerHTML = Object.entries(defaultPasswords).map(([role, info]) => {
+    const pw = saved[role] || info.default;
+    return `<tr>
+      <td><strong>${info.label}</strong></td>
+      <td style="font-family:monospace;letter-spacing:1px;">${pw}</td>
+      <td>${info.badge}</td>
+      <td><button onclick="openPwModal('${role}')" style="padding:6px 14px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:700;color:#1a1a2e;white-space:nowrap;"><i class="fas fa-edit"></i> تعديل</button></td>
+    </tr>`;
+  }).join('');
+}
+let editingRole = null;
+function openPwModal(role) {
+  editingRole = role;
+  document.getElementById('pwModalRole').textContent = defaultPasswords[role].label;
+  document.getElementById('pwNewInput').value = getEffectivePassword(role);
+  document.getElementById('pwSaveMsg').style.display = 'none';
+  const modal = document.getElementById('pwModal');
+  modal.style.display = 'flex';
+  setTimeout(() => document.getElementById('pwNewInput').focus(), 100);
+}
+function closePwModal() {
+  document.getElementById('pwModal').style.display = 'none';
+  editingRole = null;
+}
+function savePw() {
+  const newPw = document.getElementById('pwNewInput').value.trim();
+  if (!newPw || newPw.length < 4) { alert('كلمة المرور يجب أن تكون 4 أحرف على الأقل'); return; }
+  const saved = getSavedPasswords();
+  saved[editingRole] = newPw;
+  localStorage.setItem('aljood_passwords', JSON.stringify(saved));
+  // Update live passwords map
+  buildPasswordsMap();
+  renderPwTable();
+  document.getElementById('pwSaveMsg').style.display = 'block';
+  setTimeout(closePwModal, 1500);
+}
+// Close modal on backdrop click
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('pwModal');
+  if (modal && e.target === modal) closePwModal();
+});
+
+// ===== PASSWORDS & ROLES =====
+let PASSWORDS = {};
+function buildPasswordsMap() {
+  PASSWORDS = {};
+  PASSWORDS[getEffectivePassword('admin')]     = { role: 'admin',     name: 'نور يم — مديرة النظام',      roleLabel: '👑 Admin | المدير' };
+  PASSWORDS[getEffectivePassword('principal')] = { role: 'principal', name: 'مديرة المدرسة — Principal',   roleLabel: '🏫 Principal | المديرة' };
+  PASSWORDS[getEffectivePassword('teacher')]   = { role: 'teacher',   name: 'معلم / معلمة',                roleLabel: '📚 معلم | Teacher' };
+  PASSWORDS[getEffectivePassword('staff')]     = { role: 'staff',     name: 'موظف إداري',                  roleLabel: '🏢 إداري | Staff' };
+  PASSWORDS[getEffectivePassword('parent')]    = { role: 'parent',    name: 'ولي أمر',                     roleLabel: '❤️ ولي الأمر | Parent' };
+}
+buildPasswordsMap();
 
 let currentRole = 'admin';
 let loginRole = 'admin';
 
 function setRole(r) {
   loginRole = r;
-  document.querySelectorAll('.login-tab').forEach((t,i) => t.classList.toggle('active', ['admin','teacher','admin_staff','parent'][i] === r));
+  document.querySelectorAll('.login-tab').forEach((t,i) => t.classList.toggle('active', ['admin','principal','teacher','admin_staff','parent'][i] === r));
 }
 
 function doLogin() {
@@ -1090,6 +1163,7 @@ function showSection(name) {
   event.currentTarget.classList.add('active');
   document.getElementById('topbarTitle').textContent = sectionTitles[name] || name;
   window.scrollTo(0,0);
+  if (name === 'admin_panel') renderPwTable();
 }
 
 // ===== DATE =====
