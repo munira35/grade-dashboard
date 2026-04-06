@@ -277,6 +277,76 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 .student-avg { font-weight:800; color:var(--accent); font-size:0.95rem; }
 
 .section-divider { height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); margin:25px 0; }
+
+/* ===== PARENT PORTAL ===== */
+.parent-search-box { background:white; border-radius:16px; padding:30px; margin-bottom:25px; box-shadow:0 2px 15px rgba(0,0,0,0.08); }
+.parent-search-box h3 { color:var(--primary); font-size:1.1rem; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+.parent-filters { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; margin-bottom:20px; }
+@media(max-width:600px){ .parent-filters { grid-template-columns:1fr; } }
+.parent-filter-select, .parent-filter-input {
+  padding:12px 15px; border:2px solid #e2e8f0; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:0.9rem; background:white; color:var(--text);
+  transition:border 0.3s; outline:none;
+}
+.parent-filter-select:focus, .parent-filter-input:focus { border-color:var(--accent); }
+.parent-search-btn {
+  padding:12px 30px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:var(--primary); border:none; border-radius:10px; font-family:'Cairo',sans-serif;
+  font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.3s; width:100%;
+}
+.parent-search-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(201,162,39,0.35); }
+.report-card {
+  background:white; border-radius:16px; padding:30px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.1); display:none;
+}
+.report-card.visible { display:block; }
+.report-card-header {
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white; border-radius:12px; padding:25px; margin-bottom:25px;
+  display:flex; align-items:center; gap:20px;
+}
+.report-card-avatar {
+  width:70px; height:70px; background:rgba(201,162,39,0.2); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0;
+}
+.report-card-name { font-size:1.3rem; font-weight:800; color:var(--accent); }
+.report-card-meta { font-size:0.85rem; color:rgba(255,255,255,0.7); margin-top:4px; }
+.report-card-id { font-size:0.8rem; color:rgba(255,255,255,0.4); margin-top:2px; }
+.marks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:15px; margin-bottom:25px; }
+.mark-card {
+  background:#f8fafc; border-radius:12px; padding:16px; text-align:center;
+  border-right:4px solid var(--accent); transition:transform 0.2s;
+}
+.mark-card:hover { transform:translateY(-2px); }
+.mark-subject { font-size:0.8rem; color:#718096; margin-bottom:6px; font-weight:600; }
+.mark-value { font-size:1.6rem; font-weight:800; color:var(--primary); }
+.mark-grade { font-size:0.75rem; margin-top:4px; padding:2px 8px; border-radius:10px; display:inline-block; }
+.mark-grade.a { background:#d4edda; color:#155724; }
+.mark-grade.b { background:#cce5ff; color:#004085; }
+.mark-grade.c { background:#fff3cd; color:#856404; }
+.mark-grade.d { background:#f8d7da; color:#721c24; }
+.report-summary {
+  background:linear-gradient(135deg,#f8fafc,#edf2f7); border-radius:12px;
+  padding:20px; display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:25px;
+  text-align:center;
+}
+.summary-item-label { font-size:0.78rem; color:#718096; margin-bottom:4px; }
+.summary-item-value { font-size:1.4rem; font-weight:800; color:var(--primary); }
+.report-comments { background:#fffbf0; border-radius:12px; padding:20px; border-right:4px solid var(--accent); }
+.report-comments h4 { color:var(--primary); margin-bottom:10px; font-size:0.95rem; }
+.report-comments p { color:#4a5568; font-size:0.88rem; line-height:1.8; }
+.no-student-msg { text-align:center; padding:40px; color:#718096; font-size:0.95rem; display:none; }
+.parent-welcome { background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:16px; padding:25px 30px; margin-bottom:25px; color:white; }
+.parent-welcome h2 { color:var(--accent); font-size:1.2rem; margin-bottom:8px; }
+.parent-welcome p { color:rgba(255,255,255,0.7); font-size:0.88rem; line-height:1.6; }
+.credentials-box { background:white; border-radius:12px; padding:20px; margin-top:15px; border:2px solid rgba(201,162,39,0.3); }
+.credentials-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #f0f0f0; }
+.credentials-row:last-child { border-bottom:none; }
+.cred-label { color:#718096; font-size:0.85rem; }
+.cred-value { color:var(--primary); font-weight:700; font-size:0.9rem; font-family:monospace; background:#f8fafc; padding:4px 10px; border-radius:6px; }
+.copy-btn { padding:4px 12px; background:var(--accent); color:var(--primary); border:none; border-radius:6px; font-family:'Cairo',sans-serif; font-size:0.78rem; cursor:pointer; }
+.template-notice { background:#e8f4fd; border:1px solid #bee3f8; border-radius:10px; padding:15px; margin-bottom:20px; font-size:0.85rem; color:#2c5282; display:flex; gap:10px; align-items:flex-start; }
+
 </style>
 </head>
 <body>
@@ -291,9 +361,10 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     <div class="login-title">بوابة مدرسة الجود</div>
     <div class="login-subtitle">Al Jood School Portal — Academic Year 2025-2026</div>
     <div class="login-tabs">
-      <button class="login-tab active" onclick="setRole('admin')"><i class="fas fa-crown"></i> مدير النظام</button>
+      <button class="login-tab active" onclick="setRole('admin')"><i class="fas fa-crown"></i> مدير</button>
       <button class="login-tab" onclick="setRole('teacher')"><i class="fas fa-chalkboard-teacher"></i> معلم</button>
       <button class="login-tab" onclick="setRole('admin_staff')"><i class="fas fa-user-tie"></i> إداري</button>
+      <button class="login-tab" onclick="setRole('parent')"><i class="fas fa-heart"></i> ولي الأمر</button>
     </div>
     <input type="password" class="login-input" id="loginPass" placeholder="كلمة المرور / Password" onkeypress="if(event.key==='Enter')doLogin()">
     <button class="login-btn" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> &nbsp; دخول</button>
@@ -344,6 +415,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     <div class="nav-section-title">المحتوى</div>
     <div class="nav-item" onclick="showSection('achievements')"><i class="fas fa-trophy"></i><span>الإنجازات المدرسية</span></div>
     <div class="nav-item" onclick="showSection('documents')"><i class="fas fa-folder-open"></i><span>الوثائق والملفات</span></div>
+    <div class="nav-item" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#e53e3e">جديد</span></div>
     
     <div class="admin-only" id="adminMenu" style="display:none">
       <div class="nav-section-title" style="color:rgba(201,162,39,0.7)">⚙ لوحة المدير</div>
@@ -729,6 +801,116 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
       </div>
     </div>
 
+
+    <!-- ===== PARENTS PORTAL ===== -->
+    <div class="section" id="section-parents">
+      <div class="page-header" style="background:linear-gradient(135deg,#1a0a2e,#2d1b6b)">
+        <div class="page-header-text">
+          <h1>❤️ بوابة أولياء الأمور</h1>
+          <p>Parents Portal — تتبع مسيرة ابنك / ابنتك الأكاديمية</p>
+        </div>
+        <i class="fas fa-heart page-header-icon"></i>
+      </div>
+
+      <div class="template-notice">
+        <i class="fas fa-info-circle" style="font-size:1.2rem;margin-top:2px;flex-shrink:0"></i>
+        <div><strong>ملاحظة:</strong> هذه بوابة تجريبية ببيانات نموذجية. يمكن لمدير النظام تحديث بيانات الطلاب الفعلية (الهوية الإماراتية، الحساب الدراسي) في أي وقت.</div>
+      </div>
+
+      <div class="parent-welcome">
+        <h2>🌟 مرحباً بكم في بوابة أولياء الأمور — مدرسة الجود</h2>
+        <p>يمكنكم من خلال هذه البوابة الاطلاع على درجات ابنكم/ابنتكم، تقاريرهم الأكاديمية، وبيانات الدخول المدرسي. اختر الصف وأدخل رقم الهوية الإماراتية للبحث.</p>
+      </div>
+
+      <div class="parent-search-box">
+        <h3><i class="fas fa-search" style="color:var(--accent)"></i> ابحث عن بيانات ابنك / ابنتك</h3>
+        <div class="parent-filters">
+          <select class="parent-filter-select" id="parentGradeFilter" onchange="resetParentSearch()">
+            <option value="">-- اختر الصف --</option>
+            <option value="1">الصف الأول</option>
+            <option value="2">الصف الثاني</option>
+            <option value="3">الصف الثالث</option>
+            <option value="4">الصف الرابع</option>
+            <option value="5">الصف الخامس</option>
+            <option value="6">الصف السادس</option>
+            <option value="7">الصف السابع</option>
+            <option value="8">الصف الثامن</option>
+          </select>
+          <input type="text" class="parent-filter-input" id="parentEmiratesId"
+            placeholder="رقم الهوية الإماراتية (784-XXXX-XXXXXXX-X)"
+            oninput="this.value=this.value.replace(/[^0-9\-]/g,'')" maxlength="18">
+          <button class="parent-search-btn" onclick="searchParent()">
+            <i class="fas fa-search"></i> &nbsp; بحث عن الطالب
+          </button>
+        </div>
+        <div id="parentNoResult" class="no-student-msg">
+          <i class="fas fa-user-times" style="font-size:2.5rem;color:#e2e8f0;margin-bottom:10px"></i>
+          <p>لم يتم العثور على طالب بهذه البيانات.<br><small>تأكد من اختيار الصف الصحيح وإدخال رقم الهوية بشكل دقيق.</small></p>
+        </div>
+      </div>
+
+      <!-- Report Card -->
+      <div class="report-card" id="studentReportCard">
+        <div class="report-card-header">
+          <div class="report-card-avatar">👨‍🎓</div>
+          <div>
+            <div class="report-card-name" id="rc-name">—</div>
+            <div class="report-card-meta" id="rc-meta">—</div>
+            <div class="report-card-id" id="rc-id">—</div>
+          </div>
+        </div>
+
+        <div class="report-summary">
+          <div>
+            <div class="summary-item-label">المعدل العام</div>
+            <div class="summary-item-value" id="rc-avg">—</div>
+          </div>
+          <div>
+            <div class="summary-item-label">الترتيب في الصف</div>
+            <div class="summary-item-value" id="rc-rank">—</div>
+          </div>
+          <div>
+            <div class="summary-item-label">الحالة</div>
+            <div class="summary-item-value" id="rc-status">—</div>
+          </div>
+        </div>
+
+        <h4 style="color:var(--primary);margin-bottom:15px;font-size:0.95rem"><i class="fas fa-chart-bar" style="color:var(--accent)"></i> &nbsp; درجات الفصل الثاني</h4>
+        <div class="marks-grid" id="rc-marks"></div>
+
+        <div class="report-comments" style="margin-bottom:20px">
+          <h4><i class="fas fa-comment-dots" style="color:var(--accent)"></i> &nbsp; ملاحظات المعلمين</h4>
+          <p id="rc-comments">—</p>
+        </div>
+
+        <h4 style="color:var(--primary);margin-bottom:15px;font-size:0.95rem"><i class="fas fa-key" style="color:var(--accent)"></i> &nbsp; بيانات الدخول المدرسي</h4>
+        <div class="credentials-box">
+          <div class="credentials-row">
+            <span class="cred-label">البريد الإلكتروني المدرسي</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="cred-value" id="rc-email">—</span>
+              <button class="copy-btn" onclick="copyText('rc-email')">نسخ</button>
+            </div>
+          </div>
+          <div class="credentials-row">
+            <span class="cred-label">كلمة المرور</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="cred-value" id="rc-password">—</span>
+              <button class="copy-btn" onclick="copyText('rc-password')">نسخ</button>
+            </div>
+          </div>
+          <div class="credentials-row">
+            <span class="cred-label">رمز Google Classroom</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="cred-value" id="rc-classroom">—</span>
+              <button class="copy-btn" onclick="copyText('rc-classroom')">نسخ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end parents section -->
+
     <!-- ===== ADMIN PANEL (ADMIN ONLY) ===== -->
     <div class="section" id="section-admin_panel">
       <div class="page-header" style="background:linear-gradient(135deg,#1a0a0a,#4a1a1a)">
@@ -749,6 +931,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
             <tr><td><strong>مدير النظام (Admin)</strong></td><td>AlJood@2026</td><td><span class="grade-badge grade-a">وصول كامل</span></td></tr>
             <tr><td><strong>المعلمون (Teacher)</strong></td><td>Teacher2026</td><td><span class="grade-badge grade-b">موارد المعلمين</span></td></tr>
             <tr><td><strong>الإداريون (Staff)</strong></td><td>Staff2026</td><td><span class="grade-badge grade-c">الإدارة فقط</span></td></tr>
+            <tr><td><strong>أولياء الأمور (Parent)</strong></td><td>Parent2026</td><td><span class="grade-badge" style="background:#e8d5ff;color:#553c9a">بوابة الأولياء</span></td></tr>
           </tbody>
         </table>
         <div style="margin-top:15px;padding:12px;background:#fffbf0;border-radius:8px;border-right:4px solid var(--accent);font-size:0.85rem">
@@ -779,7 +962,8 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 const PASSWORDS = {
   'AlJood@2026': { role: 'admin', name: 'نور يم — مديرة النظام', roleLabel: '👑 Admin | المدير' },
   'Teacher2026': { role: 'teacher', name: 'معلم / معلمة', roleLabel: '📚 معلم | Teacher' },
-  'Staff2026':   { role: 'staff',   name: 'موظف إداري', roleLabel: '🏢 إداري | Staff' }
+  'Staff2026':   { role: 'staff',   name: 'موظف إداري', roleLabel: '🏢 إداري | Staff' },
+  'Parent2026':  { role: 'parent',  name: 'ولي أمر', roleLabel: '❤️ ولي الأمر | Parent' }
 };
 
 let currentRole = 'admin';
@@ -787,7 +971,7 @@ let loginRole = 'admin';
 
 function setRole(r) {
   loginRole = r;
-  document.querySelectorAll('.login-tab').forEach((t,i) => t.classList.toggle('active', ['admin','teacher','admin_staff'][i] === r));
+  document.querySelectorAll('.login-tab').forEach((t,i) => t.classList.toggle('active', ['admin','teacher','admin_staff','parent'][i] === r));
 }
 
 function doLogin() {
@@ -828,7 +1012,8 @@ const sectionTitles = {
   'upcoming': '📆 الفعاليات القادمة',
   'achievements': '🏆 الإنجازات',
   'documents': '📄 الوثائق والملفات',
-  'admin_panel': '⚙️ لوحة المدير'
+  'admin_panel': '⚙️ لوحة المدير',
+  'parents': '❤️ بوابة أولياء الأمور'
 };
 
 function showSection(name) {
