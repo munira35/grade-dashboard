@@ -1120,10 +1120,14 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
             <div style="color:rgba(255,255,255,0.85);font-size:0.8rem;">School Survey — Google Forms</div>
           </div>
         </div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button onclick="toggleGoogleFormEmbed('gform_1')" id="toggleBtn_gform_1"
             style="background:rgba(255,255,255,0.25);border:none;border-radius:8px;padding:8px 14px;color:#fff;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:6px;font-weight:600;">
             <i class="fas fa-eye"></i> عرض النموذج
+          </button>
+          <button onclick="toggleTeacherDashboard()" id="toggleTeacherDashBtn"
+            style="background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;padding:8px 14px;color:#1a1a2e;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:6px;font-weight:700;">
+            <i class="fas fa-chart-bar"></i> نتائج الاستبيان
           </button>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLScrSz-LzS3h-WJXQyW8W0NmceNXXUx_17zktwt2lOCsvu2v5Q/viewform?embedded=true" target="_blank"
             style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:8px 14px;color:#fff;text-decoration:none;font-size:0.85rem;display:flex;align-items:center;gap:6px;">
@@ -1143,6 +1147,27 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
           style="display:block;"
           loading="lazy">
           جارٍ التحميل… Loading…
+        </iframe>
+      </div>
+      <!-- Teacher Dashboard Results (inline) -->
+      <div id="teacherDashboardEmbed" style="display:none;border-top:3px solid #c9a227;">
+        <div style="background:linear-gradient(135deg,#1a1a2e,#0f4c75);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;direction:rtl;">
+          <div style="color:#c9a227;font-weight:700;font-size:0.95rem;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-chart-pie"></i> لوحة نتائج الاستبيان — Live Survey Dashboard
+          </div>
+          <a href="https://munira35.github.io/grade-dashboard/teacher-dashboard.html" target="_blank"
+            style="color:rgba(255,255,255,0.7);font-size:0.8rem;text-decoration:none;display:flex;align-items:center;gap:4px;">
+            <i class="fas fa-expand-alt"></i> فتح بملء الشاشة
+          </a>
+        </div>
+        <iframe
+          src="https://munira35.github.io/grade-dashboard/teacher-dashboard.html"
+          width="100%"
+          height="850"
+          frameborder="0"
+          style="display:block;"
+          loading="lazy">
+          جارٍ التحميل…
         </iframe>
       </div>
     </div>
@@ -1919,6 +1944,20 @@ function saveResponses(formId, responses) {
   localStorage.setItem('aljood_responses_' + formId, JSON.stringify(responses));
 }
 
+function toggleTeacherDashboard() {
+  const el = document.getElementById('teacherDashboardEmbed');
+  const btn = document.getElementById('toggleTeacherDashBtn');
+  if (!el) return;
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    btn.innerHTML = '<i class="fas fa-chart-bar"></i> إخفاء النتائج';
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    el.style.display = 'none';
+    btn.innerHTML = '<i class="fas fa-chart-bar"></i> نتائج الاستبيان';
+  }
+}
+
 function toggleGoogleFormEmbed(id) {
     const el = document.getElementById(id);
     const btn = document.getElementById('toggleBtn_' + id);
@@ -2126,65 +2165,160 @@ function renderFormsList() {
 
 function renderFormDashboard(form, responses) {
   if (responses.length === 0) {
-    return `<div style="text-align:center;padding:30px;color:#999;"><i class="fas fa-inbox" style="font-size:2.5rem;opacity:0.3;display:block;margin-bottom:12px;"></i><p>لا توجد استجابات بعد</p></div>`;
+    return `<div style="text-align:center;padding:40px 20px;background:linear-gradient(135deg,#f8f9ff,#eef2ff);border-radius:12px;">
+      <i class="fas fa-inbox" style="font-size:3rem;color:#c9a227;opacity:0.5;display:block;margin-bottom:14px;"></i>
+      <p style="color:#666;font-size:1rem;margin:0;">لا توجد استجابات بعد — No responses yet</p>
+      <p style="color:#aaa;font-size:0.85rem;margin:6px 0 0;">شارك النموذج مع المعلمين لاستقبال الاستجابات</p>
+    </div>`;
   }
 
-  let html = `<h4 style="margin:0 0 16px;color:#1a1a2e;"><i class="fas fa-chart-pie" style="color:#c9a227;margin-left:8px;"></i> لوحة تحليل الاستجابات — ${responses.length} استجابة</h4>`;
-  
-  html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">`;
-  form.fields.forEach(field => {
+  const lastResp = responses[responses.length - 1];
+  const lastDate = new Date(lastResp.submittedAt).toLocaleDateString('ar-AE', {day:'numeric',month:'long',year:'numeric'});
+  const palette = ['#0f4c75','#c9a227','#1b6ca8','#e8c547','#276749','#e53e3e','#6b46c1','#dd6b20'];
+
+  // ── Summary stats bar ──
+  let html = `
+  <div style="background:linear-gradient(135deg,#1a1a2e,#0f4c75);border-radius:14px;padding:20px 24px;margin-bottom:20px;direction:rtl;">
+    <div style="color:#c9a227;font-size:1rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+      <i class="fas fa-chart-pie"></i> لوحة تحليل الاستجابات — Response Analysis Dashboard
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
+      <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:2rem;font-weight:800;color:#e8c547;">${responses.length}</div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin-top:2px;">إجمالي الاستجابات</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:2rem;font-weight:800;color:#e8c547;">${form.fields.length}</div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin-top:2px;">عدد الأسئلة</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:1rem;font-weight:700;color:#e8c547;">${lastDate}</div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin-top:2px;">آخر استجابة</div>
+      </div>
+      <div style="background:rgba(201,162,39,0.25);border-radius:10px;padding:14px;text-align:center;border:1px solid rgba(201,162,39,0.4);">
+        <div style="font-size:1.8rem;color:#e8c547;"><i class="fas fa-check-circle"></i></div>
+        <div style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin-top:2px;">النموذج نشط</div>
+      </div>
+    </div>
+  </div>`;
+
+  // ── Per-field analysis cards ──
+  html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:20px;">`;
+  form.fields.forEach((field, fi) => {
     const answers = responses.map(r => r.answers[field.id]).filter(a => a !== undefined && a !== '' && a !== null);
-    html += `<div style="background:#f8f9fa;border-radius:10px;padding:16px;">
-      <div style="font-weight:700;color:#1a1a2e;font-size:0.9rem;margin-bottom:12px;">${field.label}</div>`;
-    
+    const fillRate = responses.length > 0 ? Math.round((answers.length / responses.length) * 100) : 0;
+    const accentColor = palette[fi % palette.length];
+
+    html += `<div style="background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border-top:4px solid ${accentColor};">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <div style="font-weight:700;color:#1a1a2e;font-size:0.9rem;flex:1;direction:rtl;">${field.label}</div>
+        <span style="background:${accentColor}22;color:${accentColor};border-radius:20px;padding:2px 10px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-right:8px;">${answers.length} إجابة</span>
+      </div>`;
+
     if (field.type === 'radio' || field.type === 'select') {
       const counts = {};
       answers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
-      const total = answers.length;
-      html += Object.entries(counts).map(([opt, cnt]) => {
+      const total = answers.length || 1;
+      const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+      html += sorted.map(([opt, cnt], i) => {
         const pct = Math.round((cnt / total) * 100);
-        return `<div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:3px;"><span>${opt}</span><span>${cnt} (${pct}%)</span></div>
-          <div style="background:#e0e0e0;border-radius:20px;height:8px;overflow:hidden;"><div style="background:linear-gradient(90deg,#c9a227,#e8c547);height:100%;width:${pct}%;border-radius:20px;transition:width 0.5s;"></div></div>
+        const barColor = i === 0 ? accentColor : palette[(fi + i + 1) % palette.length];
+        return `<div style="margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px;direction:rtl;">
+            <span style="color:#333;font-weight:500;">${opt}</span>
+            <span style="color:${barColor};font-weight:700;">${cnt} <span style="color:#999;font-weight:400;">(${pct}%)</span></span>
+          </div>
+          <div style="background:#f0f0f0;border-radius:20px;height:10px;overflow:hidden;">
+            <div style="background:linear-gradient(90deg,${barColor},${barColor}99);height:100%;width:${pct}%;border-radius:20px;transition:width 0.8s ease;"></div>
+          </div>
         </div>`;
       }).join('');
     } else if (field.type === 'checkbox') {
       const counts = {};
       answers.forEach(a => {
         const vals = Array.isArray(a) ? a : [a];
-        vals.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+        vals.forEach(v => { if(v) counts[v] = (counts[v] || 0) + 1; });
       });
-      html += Object.entries(counts).map(([opt, cnt]) => `
-        <div style="display:flex;justify-content:space-between;font-size:0.8rem;padding:4px 0;border-bottom:1px solid #eee;">
-          <span>${opt}</span><span style="font-weight:700;color:#c9a227;">${cnt}</span>
-        </div>`).join('');
+      const maxVal = Math.max(...Object.values(counts), 1);
+      html += `<div style="display:flex;flex-direction:column;gap:6px;">` +
+        Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([opt, cnt]) => {
+          const pct = Math.round((cnt / maxVal) * 100);
+          return `<div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:3px;direction:rtl;">
+              <span style="color:#333;">${opt}</span><span style="color:${accentColor};font-weight:700;">${cnt}</span>
+            </div>
+            <div style="background:#f0f0f0;border-radius:20px;height:8px;overflow:hidden;">
+              <div style="background:${accentColor};height:100%;width:${pct}%;border-radius:20px;opacity:0.8;"></div>
+            </div>
+          </div>`;
+        }).join('') + `</div>`;
+    } else if (field.type === 'number') {
+      const nums = answers.map(Number).filter(n => !isNaN(n));
+      if (nums.length > 0) {
+        const avg = (nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(1);
+        const min = Math.min(...nums);
+        const max = Math.max(...nums);
+        html += `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px;">
+            <div style="font-size:1.3rem;font-weight:800;color:${accentColor};">${avg}</div>
+            <div style="font-size:0.72rem;color:#888;">المتوسط</div>
+          </div>
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px;">
+            <div style="font-size:1.3rem;font-weight:800;color:#276749;">${min}</div>
+            <div style="font-size:0.72rem;color:#888;">الأدنى</div>
+          </div>
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px;">
+            <div style="font-size:1.3rem;font-weight:800;color:#e53e3e;">${max}</div>
+            <div style="font-size:0.72rem;color:#888;">الأعلى</div>
+          </div>
+        </div>`;
+      }
     } else {
-      // Text/textarea/number/date — show recent responses
-      html += `<div style="max-height:120px;overflow-y:auto;">`;
-      answers.slice(0, 8).forEach(a => {
-        html += `<div style="font-size:0.8rem;padding:4px 8px;background:#fff;border-radius:6px;margin-bottom:4px;border-right:3px solid #c9a227;">${a}</div>`;
+      html += `<div style="max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;">`;
+      answers.slice(0, 10).forEach(a => {
+        html += `<div style="font-size:0.8rem;padding:6px 10px;background:#f8f9fa;border-radius:8px;border-right:3px solid ${accentColor};direction:rtl;">${a}</div>`;
       });
-      if (answers.length > 8) html += `<div style="font-size:0.75rem;color:#999;text-align:center;">+${answers.length - 8} استجابة أخرى</div>`;
+      if (answers.length > 10) html += `<div style="font-size:0.75rem;color:#aaa;text-align:center;padding:4px;">+${answers.length - 10} استجابة أخرى…</div>`;
       html += `</div>`;
     }
+
+    // Fill rate indicator
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid #f0f0f0;">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#aaa;margin-bottom:3px;direction:rtl;">
+        <span>معدل الإجابة</span><span style="color:${accentColor};font-weight:700;">${fillRate}%</span>
+      </div>
+      <div style="background:#f0f0f0;border-radius:20px;height:4px;">
+        <div style="background:${accentColor};height:100%;width:${fillRate}%;border-radius:20px;opacity:0.6;"></div>
+      </div>
+    </div>`;
+
     html += `</div>`;
   });
   html += `</div>`;
 
-  // Individual responses table
-  html += `<div style="margin-top:20px;">
-    <div style="font-weight:700;color:#1a1a2e;margin-bottom:10px;font-size:0.9rem;"><i class="fas fa-list" style="color:#0f4c75;margin-left:8px;"></i> جميع الاستجابات</div>
+  // ── Full responses table ──
+  html += `<div style="background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;direction:rtl;">
+      <i class="fas fa-table" style="color:#0f4c75;font-size:1rem;"></i>
+      <span style="font-weight:700;color:#1a1a2e;font-size:0.95rem;">جدول جميع الاستجابات — All Responses</span>
+      <span style="background:#eef2ff;color:#0f4c75;border-radius:20px;padding:2px 10px;font-size:0.75rem;font-weight:700;">${responses.length}</span>
+    </div>
     <div style="overflow-x:auto;">
-      <table class="data-table" style="font-size:0.8rem;">
-        <thead><tr>
-          <th>#</th><th>التاريخ</th>
-          ${form.fields.map(f => `<th>${f.label}</th>`).join('')}
-        </tr></thead>
+      <table class="data-table" style="font-size:0.8rem;width:100%;">
+        <thead style="background:linear-gradient(135deg,#1a1a2e,#0f4c75);">
+          <tr>
+            <th style="color:#e8c547;">#</th>
+            <th style="color:#e8c547;">التاريخ</th>
+            <th style="color:#e8c547;">المرسِل</th>
+            ${form.fields.map(f => `<th style="color:#e8c547;">${f.label}</th>`).join('')}
+          </tr>
+        </thead>
         <tbody>
-          ${responses.map((r, i) => `<tr>
-            <td>${i + 1}</td>
-            <td>${new Date(r.submittedAt).toLocaleDateString('ar-AE')}</td>
-            ${form.fields.map(f => `<td>${Array.isArray(r.answers[f.id]) ? r.answers[f.id].join(', ') : (r.answers[f.id] || '—')}</td>`).join('')}
+          ${responses.map((r, i) => `<tr style="background:${i%2===0?'#f8f9ff':'#fff'};">
+            <td style="font-weight:700;color:#0f4c75;">${i + 1}</td>
+            <td style="color:#555;">${new Date(r.submittedAt).toLocaleDateString('ar-AE')}</td>
+            <td><span style="background:#eef2ff;color:#0f4c75;border-radius:20px;padding:2px 8px;font-size:0.75rem;">${r.submittedBy || '—'}</span></td>
+            ${form.fields.map(f => `<td style="direction:rtl;">${Array.isArray(r.answers[f.id]) ? r.answers[f.id].join('، ') : (r.answers[f.id] || '—')}</td>`).join('')}
           </tr>`).join('')}
         </tbody>
       </table>
