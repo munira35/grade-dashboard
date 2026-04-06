@@ -438,25 +438,26 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     </div>
 
     <div class="nav-section-title">القائمة الرئيسية</div>
-    <div class="nav-item active" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-    <div class="nav-item" onclick="showSection('analysis')"><i class="fas fa-chart-bar"></i><span>تحليل درجات الفصل الثاني</span><span class="badge">جديد</span></div>
+    <div class="nav-item active" data-section="home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+    <div class="nav-item" data-section="analysis" onclick="showSection('analysis')"><i class="fas fa-chart-bar"></i><span>تحليل درجات الفصل الثاني</span><span class="badge">جديد</span></div>
     
     <div class="nav-section-title">الأقسام</div>
-    <div class="nav-item" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i><span>المعلمون</span></div>
-    <div class="nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i><span>الطلاب</span></div>
-    <div class="nav-item" onclick="showSection('admin_section')"><i class="fas fa-building"></i><span>الإدارة المدرسية</span></div>
+    <div class="nav-item" data-section="teachers" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i><span>المعلمون</span></div>
+    <div class="nav-item" data-section="students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i><span>الطلاب</span></div>
+    <div class="nav-item" data-section="admin_section" onclick="showSection('admin_section')"><i class="fas fa-building"></i><span>الإدارة المدرسية</span></div>
     
     <div class="nav-section-title">البرامج والأنشطة</div>
-    <div class="nav-item" onclick="showSection('distance')"><i class="fas fa-laptop"></i><span>التعلم عن بُعد</span></div>
-    <div class="nav-item" onclick="showSection('resources')"><i class="fas fa-star"></i><span>موارد المعلمين</span></div>
-    <div class="nav-item" onclick="showSection('projects')"><i class="fas fa-flask"></i><span>المشاريع المدرسية</span></div>
-    <div class="nav-item" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i><span>الفعاليات والأحداث</span></div>
-    <div class="nav-item" onclick="showSection('upcoming')"><i class="fas fa-calendar-plus"></i><span>الفعاليات القادمة</span></div>
+    <div class="nav-item" data-section="distance" onclick="showSection('distance')"><i class="fas fa-laptop"></i><span>التعلم عن بُعد</span></div>
+    <div class="nav-item" data-section="resources" onclick="showSection('resources')"><i class="fas fa-star"></i><span>موارد المعلمين</span></div>
+    <div class="nav-item" data-section="projects" onclick="showSection('projects')"><i class="fas fa-flask"></i><span>المشاريع المدرسية</span></div>
+    <div class="nav-item" data-section="events" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i><span>الفعاليات والأحداث</span></div>
+    <div class="nav-item" data-section="upcoming" onclick="showSection('upcoming')"><i class="fas fa-calendar-plus"></i><span>الفعاليات القادمة</span></div>
     
     <div class="nav-section-title">المحتوى</div>
-    <div class="nav-item" onclick="showSection('achievements')"><i class="fas fa-trophy"></i><span>الإنجازات المدرسية</span></div>
-    <div class="nav-item" onclick="showSection('documents')"><i class="fas fa-folder-open"></i><span>الوثائق والملفات</span></div>
-    <div class="nav-item" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#718096">قريباً</span></div>
+    <div class="nav-item" data-section="achievements" onclick="showSection('achievements')"><i class="fas fa-trophy"></i><span>الإنجازات المدرسية</span></div>
+    <div class="nav-item" data-section="documents" onclick="showSection('documents')"><i class="fas fa-folder-open"></i><span>الوثائق والملفات</span></div>
+    <div class="nav-item" data-section="parents" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#718096">قريباً</span></div>
+    <div class="nav-item" data-section="forms" onclick="showSection('forms')"><i class="fas fa-wpforms"></i><span>النماذج والاستبيانات</span><span class="badge" style="background:#10b981">جديد</span></div>
     
     <div class="admin-only" id="adminMenu" style="display:none">
       <div class="nav-section-title" style="color:rgba(201,162,39,0.7)">⚙ لوحة المدير</div>
@@ -866,26 +867,6 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 
 </style>
 
-
-  <!-- ===== TEACHER RESOURCES DASHBOARD BANNER ===== -->
-  <div style="background:linear-gradient(135deg,#0a1628 0%,#1a2d4a 100%);border-radius:16px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;box-shadow:0 8px 30px rgba(10,22,40,0.25);">
-    <div style="display:flex;align-items:center;gap:18px;">
-      <div style="width:60px;height:60px;background:rgba(201,162,39,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:2rem;">📊</div>
-      <div>
-        <div style="color:#c9a227;font-size:1.2rem;font-weight:800;font-family:'Cairo',sans-serif;margin-bottom:4px;">Teacher Online Resources Dashboard</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.88rem;">View real-time analytics on which websites teachers use in distance learning</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="teacher-dashboard.html" target="_blank" style="background:linear-gradient(135deg,#c9a227,#e8c84a);color:#0a1628;border:none;padding:12px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-        <i class="fas fa-chart-bar"></i> View Dashboard
-      </a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScrSz-LzS3h-WJXQyW8W0NmceNXXUx_17zktwt2lOCsvu2v5Q/viewform" target="_blank" style="background:rgba(255,255,255,0.1);color:white;border:2px solid rgba(255,255,255,0.3);padding:12px 22px;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-        <i class="fas fa-file-alt"></i> Fill Survey
-      </a>
-    </div>
-  </div>
-
   <!-- Distance Learning -->
   <div class="res-category">
     <div class="res-category-title"><span style="font-size:1.5rem;">💻</span> التعلم عن بُعد — Distance Learning</div>
@@ -1006,18 +987,43 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         <div class="stat-card"><div class="stat-icon green"><i class="fas fa-door-open"></i></div><div><div class="stat-value">3</div><div class="stat-label">أنواع الوصول</div></div></div>
         <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-shield-alt"></i></div><div><div class="stat-value">آمن</div><div class="stat-label">حالة الأمان</div></div></div>
       </div>
-      <!-- Password Edit Modal -->
+      <!-- Password + Access Level Edit Modal -->
       <div id="pwModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
-        <div style="background:#fff;border-radius:16px;padding:32px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);direction:rtl;">
-          <h3 style="margin:0 0 8px;color:#1a1a2e;font-size:1.2rem;"><i class="fas fa-key" style="color:#c9a227;margin-left:8px;"></i> تعديل كلمة المرور</h3>
-          <p id="pwModalRole" style="color:#666;font-size:0.9rem;margin:0 0 20px;"></p>
-          <label style="font-size:0.85rem;color:#444;font-weight:600;">كلمة المرور الجديدة</label>
-          <input id="pwNewInput" type="text" style="width:100%;margin-top:6px;padding:10px 14px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box;direction:ltr;" placeholder="أدخل كلمة المرور الجديدة" />
-          <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
-            <button onclick="closePwModal()" style="padding:10px 20px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:0.9rem;">إلغاء</button>
-            <button onclick="savePw()" style="padding:10px 24px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700;color:#1a1a2e;">💾 حفظ</button>
+        <div style="background:#fff;border-radius:16px;width:90%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,0.3);direction:rtl;overflow:hidden;">
+          <!-- Modal Header -->
+          <div style="background:linear-gradient(135deg,#1a1a2e,#2d2d5e);padding:20px 28px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <h3 style="margin:0;color:#c9a227;font-size:1.1rem;"><i class="fas fa-user-cog" style="margin-left:8px;"></i> تعديل المستخدم</h3>
+              <p id="pwModalRole" style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin:4px 0 0;"></p>
+            </div>
+            <button onclick="closePwModal()" style="background:rgba(255,255,255,0.1);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;">&times;</button>
           </div>
-          <div id="pwSaveMsg" style="display:none;margin-top:12px;padding:10px;background:#e8f5e9;border-radius:8px;color:#2e7d32;font-size:0.85rem;text-align:center;">✅ تم حفظ كلمة المرور بنجاح!</div>
+          <!-- Tabs -->
+          <div style="display:flex;border-bottom:2px solid #f0f0f0;">
+            <button id="tabPw" onclick="switchModalTab('pw')" style="flex:1;padding:12px;border:none;background:#fffbf0;font-weight:700;color:#c9a227;font-size:0.9rem;cursor:pointer;border-bottom:3px solid #c9a227;">🔑 كلمة المرور</button>
+            <button id="tabAccess" onclick="switchModalTab('access')" style="flex:1;padding:12px;border:none;background:#fff;font-size:0.9rem;cursor:pointer;color:#666;border-bottom:3px solid transparent;" id="tabAccess">🛡️ مستوى الوصول</button>
+          </div>
+          <!-- Password Tab -->
+          <div id="tabContentPw" style="padding:24px;">
+            <label style="font-size:0.85rem;color:#444;font-weight:600;display:block;margin-bottom:8px;">كلمة المرور الجديدة</label>
+            <input id="pwNewInput" type="text" style="width:100%;padding:10px 14px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box;direction:ltr;" placeholder="أدخل كلمة المرور الجديدة" />
+            <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+              <button onclick="closePwModal()" style="padding:10px 20px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:0.9rem;">إلغاء</button>
+              <button onclick="savePw()" style="padding:10px 24px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700;color:#1a1a2e;">💾 حفظ كلمة المرور</button>
+            </div>
+            <div id="pwSaveMsg" style="display:none;margin-top:12px;padding:10px;background:#e8f5e9;border-radius:8px;color:#2e7d32;font-size:0.85rem;text-align:center;">✅ تم حفظ كلمة المرور بنجاح!</div>
+          </div>
+          <!-- Access Level Tab -->
+          <div id="tabContentAccess" style="display:none;padding:24px;">
+            <p style="font-size:0.85rem;color:#666;margin:0 0 16px;">اختر الأقسام التي يمكن لهذا المستخدم رؤيتها:</p>
+            <div id="accessCheckboxes" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+            <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
+              <button onclick="resetAccess()" style="padding:10px 16px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#666;">↩️ إعادة تعيين</button>
+              <button onclick="closePwModal()" style="padding:10px 16px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:0.9rem;">إلغاء</button>
+              <button onclick="saveAccess()" style="padding:10px 24px;background:linear-gradient(135deg,#0f4c75,#1b6ca8);border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700;color:#fff;">💾 حفظ الصلاحيات</button>
+            </div>
+            <div id="accessSaveMsg" style="display:none;margin-top:12px;padding:10px;background:#e8f5e9;border-radius:8px;color:#2e7d32;font-size:0.85rem;text-align:center;">✅ تم حفظ الصلاحيات بنجاح!</div>
+          </div>
         </div>
       </div>
 
@@ -1046,6 +1052,75 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
         </div>
       </div>
     </div>
+
+
+<!-- ===== FORMS SECTION ===== -->
+<div class="section" id="section-forms">
+  <div class="page-header" style="background:linear-gradient(135deg,#0f4c75,#1b6ca8)">
+    <div class="page-header-text">
+      <h1>📋 النماذج والاستبيانات</h1>
+      <p>Forms & Surveys — إنشاء النماذج وعرض الاستجابات</p>
+    </div>
+    <i class="fas fa-wpforms page-header-icon"></i>
+  </div>
+
+  <!-- Admin/Staff: Create Form Button -->
+  <div id="formBuilderToggle" style="display:none;margin-bottom:20px;">
+    <button onclick="toggleFormBuilder()" style="background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:10px;padding:12px 24px;font-size:1rem;font-weight:700;color:#1a1a2e;cursor:pointer;display:flex;align-items:center;gap:8px;direction:rtl;">
+      <i class="fas fa-plus-circle"></i> إنشاء نموذج جديد
+    </button>
+  </div>
+
+  <!-- Form Builder Panel -->
+  <div id="formBuilderPanel" style="display:none;" class="card">
+    <div class="card-title"><i class="fas fa-tools"></i> منشئ النماذج — Form Builder</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div>
+        <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:6px;">عنوان النموذج (عربي) *</label>
+        <input id="fbTitleAr" type="text" placeholder="مثال: استبيان رأي المعلمين" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.95rem;box-sizing:border-box;direction:rtl;" />
+      </div>
+      <div>
+        <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:6px;">Form Title (English)</label>
+        <input id="fbTitleEn" type="text" placeholder="e.g. Teacher Opinion Survey" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.95rem;box-sizing:border-box;" />
+      </div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:0.85rem;font-weight:600;color:#444;display:block;margin-bottom:6px;">وصف النموذج</label>
+      <textarea id="fbDesc" rows="2" placeholder="وصف مختصر للنموذج..." style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.95rem;box-sizing:border-box;direction:rtl;resize:vertical;"></textarea>
+    </div>
+
+    <div class="card-title" style="margin-top:8px;"><i class="fas fa-list"></i> حقول النموذج</div>
+    <div id="fbFields" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
+    
+    <button onclick="addFormField()" style="background:#f0f4ff;border:2px dashed #a0aec0;border-radius:8px;padding:12px;width:100%;cursor:pointer;font-size:0.9rem;color:#4a5568;display:flex;align-items:center;justify-content:center;gap:8px;direction:rtl;">
+      <i class="fas fa-plus"></i> إضافة حقل جديد
+    </button>
+
+    <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end;direction:rtl;">
+      <button onclick="cancelFormBuilder()" style="padding:10px 20px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;">إلغاء</button>
+      <button onclick="saveForm()" style="padding:10px 28px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#1a1a2e;font-size:0.95rem;"><i class="fas fa-save"></i> حفظ النموذج</button>
+    </div>
+  </div>
+
+  <!-- Forms List -->
+  <div id="formsList"></div>
+
+  <!-- Fill Form Modal -->
+  <div id="fillFormModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 16px;">
+    <div style="background:#fff;border-radius:16px;padding:32px;width:90%;max-width:600px;margin:auto;direction:rtl;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h3 id="fillFormTitle" style="margin:0;color:#1a1a2e;font-size:1.3rem;"></h3>
+        <button onclick="closeFillModal()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#666;">&times;</button>
+      </div>
+      <p id="fillFormDesc" style="color:#666;margin:0 0 24px;font-size:0.95rem;"></p>
+      <div id="fillFormFields" style="display:flex;flex-direction:column;gap:20px;"></div>
+      <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:12px;">
+        <button onclick="closeFillModal()" style="padding:10px 20px;border:2px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;">إلغاء</button>
+        <button onclick="submitFormResponse()" style="padding:10px 28px;background:linear-gradient(135deg,#0f4c75,#1b6ca8);border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#fff;font-size:0.95rem;"><i class="fas fa-paper-plane"></i> إرسال</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   </div><!-- end mainContent -->
 </div><!-- end app -->
@@ -1173,7 +1248,8 @@ const sectionTitles = {
   'documents': '📄 الوثائق والملفات',
   'admin_panel': '⚙️ لوحة المدير',
   'resources': '🌟 موارد المعلمين',
-    'parents': '❤️ بوابة أولياء الأمور'
+  'parents': '❤️ بوابة أولياء الأمور',
+  'forms': '📋 النماذج والاستبيانات'
 };
 
 function showSection(name) {
@@ -1593,6 +1669,597 @@ function confirmDelete() {
   saveData(_delSection, data);
   renderAllSections();
 }
+
+
+
+// ===========================
+// ACCESS LEVEL MANAGEMENT
+// ===========================
+const ALL_SECTIONS = [
+  { id: 'home',          label: 'الرئيسية',               icon: 'fa-home' },
+  { id: 'analysis',      label: 'تحليل الدرجات',          icon: 'fa-chart-bar' },
+  { id: 'teachers',      label: 'المعلمون',               icon: 'fa-chalkboard-teacher' },
+  { id: 'students',      label: 'الطلاب',                 icon: 'fa-user-graduate' },
+  { id: 'admin_section', label: 'الإدارة المدرسية',       icon: 'fa-building' },
+  { id: 'distance',      label: 'التعلم عن بُعد',         icon: 'fa-laptop' },
+  { id: 'resources',     label: 'موارد المعلمين',         icon: 'fa-star' },
+  { id: 'projects',      label: 'المشاريع المدرسية',      icon: 'fa-flask' },
+  { id: 'events',        label: 'الفعاليات',              icon: 'fa-calendar-alt' },
+  { id: 'upcoming',      label: 'الفعاليات القادمة',      icon: 'fa-calendar-plus' },
+  { id: 'achievements',  label: 'الإنجازات',             icon: 'fa-trophy' },
+  { id: 'documents',     label: 'الوثائق والملفات',       icon: 'fa-folder-open' },
+  { id: 'parents',       label: 'بوابة أولياء الأمور',    icon: 'fa-heart' },
+  { id: 'forms',         label: 'النماذج والاستبيانات',   icon: 'fa-wpforms' },
+];
+
+const DEFAULT_ACCESS = {
+  admin:         ['home','analysis','teachers','students','admin_section','distance','resources','projects','events','upcoming','achievements','documents','parents','forms'],
+  principal:     ['home','analysis','teachers','students','admin_section','distance','resources','projects','events','upcoming','achievements','documents','parents','forms'],
+  teacher:       ['home','analysis','students','distance','resources','projects','events','upcoming','achievements','forms'],
+  staff:         ['home','events','upcoming','achievements','documents','forms'],
+  parent:        ['parents']
+};
+
+// Locked sections that admin cannot remove from certain roles
+const LOCKED_ACCESS = {
+  admin: ['home','admin_panel'],
+  principal: ['home'],
+  teacher: ['home'],
+  staff: ['home'],
+  parent: ['parents']
+};
+
+function getSavedAccess() {
+  try { return JSON.parse(localStorage.getItem('aljood_access') || '{}'); } catch(e) { return {}; }
+}
+
+function getEffectiveAccess(role) {
+  const saved = getSavedAccess();
+  return saved[role] || DEFAULT_ACCESS[role] || [];
+}
+
+function applyNavAccess() {
+  if (currentRole === 'admin') {
+    // Admin always sees everything
+    document.querySelectorAll('.nav-item[data-section]').forEach(el => el.style.display = 'flex');
+    return;
+  }
+  const access = getEffectiveAccess(currentRole);
+  document.querySelectorAll('.nav-item[data-section]').forEach(el => {
+    const sec = el.getAttribute('data-section');
+    el.style.display = access.includes(sec) ? 'flex' : 'none';
+  });
+}
+
+// ===== Modal Tab Switching =====
+function switchModalTab(tab) {
+  document.getElementById('tabContentPw').style.display = tab === 'pw' ? 'block' : 'none';
+  document.getElementById('tabContentAccess').style.display = tab === 'access' ? 'block' : 'none';
+  document.getElementById('tabPw').style.cssText = tab === 'pw'
+    ? 'flex:1;padding:12px;border:none;background:#fffbf0;font-weight:700;color:#c9a227;font-size:0.9rem;cursor:pointer;border-bottom:3px solid #c9a227;'
+    : 'flex:1;padding:12px;border:none;background:#fff;font-size:0.9rem;cursor:pointer;color:#666;border-bottom:3px solid transparent;';
+  document.getElementById('tabAccess').style.cssText = tab === 'access'
+    ? 'flex:1;padding:12px;border:none;background:#fffbf0;font-weight:700;color:#0f4c75;font-size:0.9rem;cursor:pointer;border-bottom:3px solid #0f4c75;'
+    : 'flex:1;padding:12px;border:none;background:#fff;font-size:0.9rem;cursor:pointer;color:#666;border-bottom:3px solid transparent;';
+  if (tab === 'access') renderAccessCheckboxes();
+}
+
+function renderAccessCheckboxes() {
+  const role = editingRole;
+  if (!role || role === 'admin') return;
+  const currentAccess = getEffectiveAccess(role);
+  const locked = LOCKED_ACCESS[role] || [];
+  const container = document.getElementById('accessCheckboxes');
+  container.innerHTML = ALL_SECTIONS.map(sec => {
+    const isLocked = locked.includes(sec.id);
+    const isChecked = currentAccess.includes(sec.id);
+    return `<label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:2px solid ${isChecked ? '#c9a227' : '#e0e0e0'};border-radius:8px;cursor:${isLocked ? 'not-allowed' : 'pointer'};background:${isChecked ? '#fffbf0' : '#fff'};opacity:${isLocked ? '0.6' : '1'};" onclick="${isLocked ? '' : `toggleAccessCheck('${sec.id}')`}">
+      <input type="checkbox" id="acc_${sec.id}" ${isChecked ? 'checked' : ''} ${isLocked ? 'disabled' : ''} style="width:16px;height:16px;accent-color:#c9a227;" onchange="refreshAccessLabel('${sec.id}')">
+      <span style="font-size:0.85rem;font-weight:600;">${sec.label}</span>
+      ${isLocked ? '<span style="font-size:0.7rem;color:#999;margin-right:auto;">مقفل</span>' : ''}
+    </label>`;
+  }).join('');
+}
+
+function toggleAccessCheck(secId) {
+  const cb = document.getElementById('acc_' + secId);
+  if (cb && !cb.disabled) {
+    cb.checked = !cb.checked;
+    refreshAccessLabel(secId);
+  }
+}
+
+function refreshAccessLabel(secId) {
+  const cb = document.getElementById('acc_' + secId);
+  if (!cb) return;
+  const label = cb.closest('label');
+  if (label) {
+    label.style.borderColor = cb.checked ? '#c9a227' : '#e0e0e0';
+    label.style.background = cb.checked ? '#fffbf0' : '#fff';
+  }
+}
+
+function saveAccess() {
+  const role = editingRole;
+  if (!role || role === 'admin') { closePwModal(); return; }
+  const saved = getSavedAccess();
+  const selected = ALL_SECTIONS.filter(sec => {
+    const cb = document.getElementById('acc_' + sec.id);
+    return cb && cb.checked;
+  }).map(sec => sec.id);
+  saved[role] = selected;
+  localStorage.setItem('aljood_access', JSON.stringify(saved));
+  document.getElementById('accessSaveMsg').style.display = 'block';
+  setTimeout(() => { closePwModal(); renderPwTable(); }, 1200);
+}
+
+function resetAccess() {
+  const role = editingRole;
+  if (!role) return;
+  const saved = getSavedAccess();
+  delete saved[role];
+  localStorage.setItem('aljood_access', JSON.stringify(saved));
+  renderAccessCheckboxes();
+}
+
+// Patch openPwModal to support admin=locked access tab
+const _origOpenPwModal = openPwModal;
+window.openPwModal = function(role) {
+  _origOpenPwModal(role);
+  switchModalTab('pw');
+  // Disable access tab for admin
+  const tabAccess = document.getElementById('tabAccess');
+  if (tabAccess) {
+    tabAccess.disabled = (role === 'admin');
+    tabAccess.style.opacity = (role === 'admin') ? '0.4' : '1';
+    tabAccess.title = (role === 'admin') ? 'مدير النظام يملك وصول كامل دائماً' : '';
+  }
+};
+
+// Patch renderPwTable to show dynamic access badge
+const _origRenderPwTable = renderPwTable;
+window.renderPwTable = function() {
+  const tbody = document.getElementById('pwTableBody');
+  if (!tbody) return;
+  const saved = getSavedPasswords();
+  const accessData = getSavedAccess();
+  tbody.innerHTML = Object.entries(defaultPasswords).map(([role, info]) => {
+    const pw = saved[role] || info.default;
+    const access = accessData[role] || DEFAULT_ACCESS[role] || [];
+    const isDefault = !accessData[role];
+    const accessLabel = role === 'admin' ? '<span class="grade-badge grade-a">وصول كامل + تعديل</span>'
+      : role === 'principal' ? `<span class="grade-badge grade-a">${access.length} قسم — قراءة فقط</span>`
+      : `<span class="grade-badge grade-b">${access.length} أقسام ${isDefault ? '(افتراضي)' : '(مخصص)'}</span>`;
+    return `<tr>
+      <td><strong>${info.label}</strong></td>
+      <td style="font-family:monospace;letter-spacing:1px;">${pw}</td>
+      <td>${accessLabel}</td>
+      <td><button onclick="openPwModal('${role}')" style="padding:6px 14px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:700;color:#1a1a2e;white-space:nowrap;"><i class="fas fa-edit"></i> تعديل</button></td>
+    </tr>`;
+  }).join('');
+};
+
+// Patch doLogin to apply nav access after login
+const _origDoLogin = doLogin;
+window.doLogin = function() {
+  _origDoLogin();
+  setTimeout(applyNavAccess, 200);
+  // Show forms builder toggle for admin/staff
+  setTimeout(() => {
+    const toggle = document.getElementById('formBuilderToggle');
+    if (toggle) toggle.style.display = (currentRole === 'admin' || currentRole === 'staff') ? 'block' : 'none';
+    renderFormsList();
+  }, 300);
+};
+
+
+// ===========================
+// FORM BUILDER
+// ===========================
+let fbFieldCount = 0;
+let editingFormId = null;
+let fillFormId = null;
+
+function getForms() {
+  try { return JSON.parse(localStorage.getItem('aljood_forms') || '[]'); } catch(e) { return []; }
+}
+function saveForms(forms) {
+  localStorage.setItem('aljood_forms', JSON.stringify(forms));
+}
+function getResponses(formId) {
+  try { return JSON.parse(localStorage.getItem('aljood_responses_' + formId) || '[]'); } catch(e) { return []; }
+}
+function saveResponses(formId, responses) {
+  localStorage.setItem('aljood_responses_' + formId, JSON.stringify(responses));
+}
+
+function toggleFormBuilder() {
+  const panel = document.getElementById('formBuilderPanel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    editingFormId = null;
+    resetFormBuilder();
+    panel.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function cancelFormBuilder() {
+  document.getElementById('formBuilderPanel').style.display = 'none';
+  editingFormId = null;
+  resetFormBuilder();
+}
+
+function resetFormBuilder() {
+  document.getElementById('fbTitleAr').value = '';
+  document.getElementById('fbTitleEn').value = '';
+  document.getElementById('fbDesc').value = '';
+  document.getElementById('fbFields').innerHTML = '';
+  fbFieldCount = 0;
+}
+
+function addFormField(fieldData) {
+  fbFieldCount++;
+  const id = 'ff_' + fbFieldCount;
+  const container = document.getElementById('fbFields');
+  const div = document.createElement('div');
+  div.id = 'field_' + id;
+  div.style.cssText = 'background:#f8f9fa;border:2px solid #e0e0e0;border-radius:10px;padding:16px;position:relative;';
+  div.innerHTML = `
+    <button onclick="removeField('${id}')" style="position:absolute;top:10px;left:10px;background:#fee2e2;border:none;border-radius:6px;width:28px;height:28px;cursor:pointer;color:#dc2626;font-size:0.9rem;">✕</button>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px;">
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">سؤال / Label</label>
+        <input type="text" id="${id}_label" value="${fieldData ? fieldData.label : ''}" placeholder="نص السؤال..." style="width:100%;padding:8px;border:1.5px solid #ddd;border-radius:6px;font-size:0.9rem;box-sizing:border-box;direction:rtl;" />
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#444;display:block;margin-bottom:4px;">نوع الحقل</label>
+        <select id="${id}_type" onchange="updateFieldOptions('${id}')" style="width:100%;padding:8px;border:1.5px solid #ddd;border-radius:6px;font-size:0.9rem;cursor:pointer;">
+          <option value="text" ${fieldData && fieldData.type === 'text' ? 'selected' : ''}>نص قصير</option>
+          <option value="textarea" ${fieldData && fieldData.type === 'textarea' ? 'selected' : ''}>نص طويل</option>
+          <option value="number" ${fieldData && fieldData.type === 'number' ? 'selected' : ''}>رقم</option>
+          <option value="date" ${fieldData && fieldData.type === 'date' ? 'selected' : ''}>تاريخ</option>
+          <option value="select" ${fieldData && fieldData.type === 'select' ? 'selected' : ''}>قائمة منسدلة</option>
+          <option value="radio" ${fieldData && fieldData.type === 'radio' ? 'selected' : ''}>اختيار واحد</option>
+          <option value="checkbox" ${fieldData && fieldData.type === 'checkbox' ? 'selected' : ''}>اختيار متعدد</option>
+        </select>
+      </div>
+    </div>
+    <div id="${id}_options" style="margin-bottom:10px;"></div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;cursor:pointer;">
+      <input type="checkbox" id="${id}_required" ${fieldData && fieldData.required ? 'checked' : ''} style="width:16px;height:16px;accent-color:#c9a227;">
+      <span>حقل إلزامي</span>
+    </label>
+  `;
+  container.appendChild(div);
+  if (fieldData && (fieldData.type === 'select' || fieldData.type === 'radio' || fieldData.type === 'checkbox')) {
+    updateFieldOptions(id, fieldData.options);
+  } else {
+    updateFieldOptions(id);
+  }
+}
+
+function removeField(id) {
+  const el = document.getElementById('field_' + id);
+  if (el) el.remove();
+}
+
+function updateFieldOptions(id, existingOptions) {
+  const type = document.getElementById(id + '_type').value;
+  const optDiv = document.getElementById(id + '_options');
+  if (type === 'select' || type === 'radio' || type === 'checkbox') {
+    const opts = existingOptions || ['خيار 1', 'خيار 2'];
+    optDiv.innerHTML = `
+      <label style="font-size:0.8rem;font-weight:600;color:#444;display:block;margin-bottom:6px;">خيارات الإجابة</label>
+      <div id="${id}_opts_list" style="display:flex;flex-direction:column;gap:6px;">
+        ${opts.map((o, i) => `
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input type="text" value="${o}" placeholder="خيار ${i+1}" style="flex:1;padding:6px 10px;border:1.5px solid #ddd;border-radius:6px;font-size:0.85rem;direction:rtl;" />
+            <button onclick="this.parentElement.remove()" style="background:#fee2e2;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;color:#dc2626;">✕</button>
+          </div>`).join('')}
+      </div>
+      <button onclick="addOptionRow('${id}')" style="margin-top:6px;padding:5px 12px;background:#f0f4ff;border:1.5px dashed #a0aec0;border-radius:6px;cursor:pointer;font-size:0.8rem;color:#4a5568;">+ إضافة خيار</button>
+    `;
+  } else {
+    optDiv.innerHTML = '';
+  }
+}
+
+function addOptionRow(id) {
+  const list = document.getElementById(id + '_opts_list');
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:6px;align-items:center;';
+  div.innerHTML = `<input type="text" placeholder="خيار جديد" style="flex:1;padding:6px 10px;border:1.5px solid #ddd;border-radius:6px;font-size:0.85rem;direction:rtl;" />
+    <button onclick="this.parentElement.remove()" style="background:#fee2e2;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;color:#dc2626;">✕</button>`;
+  list.appendChild(div);
+}
+
+function saveForm() {
+  const titleAr = document.getElementById('fbTitleAr').value.trim();
+  if (!titleAr) { alert('الرجاء إدخال عنوان النموذج'); return; }
+  
+  // Collect fields
+  const fieldEls = document.querySelectorAll('#fbFields > div[id^="field_"]');
+  const fields = [];
+  fieldEls.forEach(el => {
+    const fid = el.id.replace('field_', '');
+    const label = document.getElementById(fid + '_label').value.trim();
+    const type = document.getElementById(fid + '_type').value;
+    const required = document.getElementById(fid + '_required').checked;
+    let options = [];
+    if (type === 'select' || type === 'radio' || type === 'checkbox') {
+      const optInputs = document.querySelectorAll('#' + fid + '_opts_list input[type="text"]');
+      options = Array.from(optInputs).map(i => i.value.trim()).filter(v => v);
+    }
+    if (label) fields.push({ id: fid, label, type, required, options });
+  });
+
+  const forms = getForms();
+  if (editingFormId) {
+    const idx = forms.findIndex(f => f.id === editingFormId);
+    if (idx >= 0) {
+      forms[idx] = { ...forms[idx], titleAr, titleEn: document.getElementById('fbTitleEn').value.trim(), description: document.getElementById('fbDesc').value.trim(), fields, updatedAt: new Date().toISOString() };
+    }
+  } else {
+    forms.push({
+      id: 'form_' + Date.now(),
+      titleAr,
+      titleEn: document.getElementById('fbTitleEn').value.trim(),
+      description: document.getElementById('fbDesc').value.trim(),
+      fields,
+      createdBy: currentRole,
+      createdAt: new Date().toISOString(),
+      active: true
+    });
+  }
+  saveForms(forms);
+  cancelFormBuilder();
+  renderFormsList();
+}
+
+function renderFormsList() {
+  const container = document.getElementById('formsList');
+  if (!container) return;
+  const forms = getForms();
+  const canEdit = currentRole === 'admin' || currentRole === 'staff';
+  const canFill = currentRole === 'teacher' || currentRole === 'admin' || currentRole === 'staff';
+  const canView = currentRole === 'admin' || currentRole === 'staff' || currentRole === 'principal';
+
+  if (forms.length === 0) {
+    container.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:#999;">
+      <i class="fas fa-clipboard" style="font-size:3rem;margin-bottom:16px;display:block;opacity:0.3;"></i>
+      <p>لا توجد نماذج بعد. ${canEdit ? 'انقر على "إنشاء نموذج جديد" للبدء.' : 'لم يتم إنشاء أي نموذج حتى الآن.'}</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = forms.map(form => {
+    const responses = getResponses(form.id);
+    const dateStr = new Date(form.createdAt).toLocaleDateString('ar-AE');
+    return `
+    <div class="card" style="margin-bottom:16px;" id="formcard_${form.id}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;">
+          <h3 style="margin:0 0 4px;color:#1a1a2e;font-size:1.1rem;">${form.titleAr}</h3>
+          ${form.titleEn ? `<p style="margin:0 0 8px;color:#888;font-size:0.85rem;">${form.titleEn}</p>` : ''}
+          ${form.description ? `<p style="margin:0 0 12px;color:#555;font-size:0.9rem;">${form.description}</p>` : ''}
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <span style="background:#f0f4ff;color:#3b5bdb;border-radius:20px;padding:4px 12px;font-size:0.8rem;"><i class="fas fa-list"></i> ${form.fields.length} حقول</span>
+            <span style="background:#f0fff4;color:#276749;border-radius:20px;padding:4px 12px;font-size:0.8rem;"><i class="fas fa-paper-plane"></i> ${responses.length} استجابة</span>
+            <span style="background:#fffbf0;color:#744210;border-radius:20px;padding:4px 12px;font-size:0.8rem;"><i class="fas fa-calendar"></i> ${dateStr}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;">
+          ${canFill ? `<button onclick="openFillForm('${form.id}')" style="padding:8px 16px;background:linear-gradient(135deg,#0f4c75,#1b6ca8);border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#fff;font-weight:600;"><i class="fas fa-edit"></i> تعبئة النموذج</button>` : ''}
+          ${canView ? `<button onclick="toggleDashboard('${form.id}')" style="padding:8px 16px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#1a1a2e;font-weight:600;"><i class="fas fa-chart-bar"></i> لوحة البيانات</button>` : ''}
+          ${canEdit ? `<button onclick="editForm('${form.id}')" style="padding:8px 12px;background:#f0f4ff;border:2px solid #a0aec0;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#3b5bdb;"><i class="fas fa-pen"></i></button>` : ''}
+          ${currentRole === 'admin' ? `<button onclick="deleteForm('${form.id}')" style="padding:8px 12px;background:#fee2e2;border:2px solid #fca5a5;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#dc2626;"><i class="fas fa-trash"></i></button>` : ''}
+        </div>
+      </div>
+      <!-- Dashboard Panel (hidden by default) -->
+      <div id="dashboard_${form.id}" style="display:none;margin-top:20px;padding-top:20px;border-top:2px solid #f0f0f0;">
+        ${renderFormDashboard(form, responses)}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderFormDashboard(form, responses) {
+  if (responses.length === 0) {
+    return `<div style="text-align:center;padding:30px;color:#999;"><i class="fas fa-inbox" style="font-size:2.5rem;opacity:0.3;display:block;margin-bottom:12px;"></i><p>لا توجد استجابات بعد</p></div>`;
+  }
+
+  let html = `<h4 style="margin:0 0 16px;color:#1a1a2e;"><i class="fas fa-chart-pie" style="color:#c9a227;margin-left:8px;"></i> لوحة تحليل الاستجابات — ${responses.length} استجابة</h4>`;
+  
+  html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">`;
+  form.fields.forEach(field => {
+    const answers = responses.map(r => r.answers[field.id]).filter(a => a !== undefined && a !== '' && a !== null);
+    html += `<div style="background:#f8f9fa;border-radius:10px;padding:16px;">
+      <div style="font-weight:700;color:#1a1a2e;font-size:0.9rem;margin-bottom:12px;">${field.label}</div>`;
+    
+    if (field.type === 'radio' || field.type === 'select') {
+      const counts = {};
+      answers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
+      const total = answers.length;
+      html += Object.entries(counts).map(([opt, cnt]) => {
+        const pct = Math.round((cnt / total) * 100);
+        return `<div style="margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:3px;"><span>${opt}</span><span>${cnt} (${pct}%)</span></div>
+          <div style="background:#e0e0e0;border-radius:20px;height:8px;overflow:hidden;"><div style="background:linear-gradient(90deg,#c9a227,#e8c547);height:100%;width:${pct}%;border-radius:20px;transition:width 0.5s;"></div></div>
+        </div>`;
+      }).join('');
+    } else if (field.type === 'checkbox') {
+      const counts = {};
+      answers.forEach(a => {
+        const vals = Array.isArray(a) ? a : [a];
+        vals.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+      });
+      html += Object.entries(counts).map(([opt, cnt]) => `
+        <div style="display:flex;justify-content:space-between;font-size:0.8rem;padding:4px 0;border-bottom:1px solid #eee;">
+          <span>${opt}</span><span style="font-weight:700;color:#c9a227;">${cnt}</span>
+        </div>`).join('');
+    } else {
+      // Text/textarea/number/date — show recent responses
+      html += `<div style="max-height:120px;overflow-y:auto;">`;
+      answers.slice(0, 8).forEach(a => {
+        html += `<div style="font-size:0.8rem;padding:4px 8px;background:#fff;border-radius:6px;margin-bottom:4px;border-right:3px solid #c9a227;">${a}</div>`;
+      });
+      if (answers.length > 8) html += `<div style="font-size:0.75rem;color:#999;text-align:center;">+${answers.length - 8} استجابة أخرى</div>`;
+      html += `</div>`;
+    }
+    html += `</div>`;
+  });
+  html += `</div>`;
+
+  // Individual responses table
+  html += `<div style="margin-top:20px;">
+    <div style="font-weight:700;color:#1a1a2e;margin-bottom:10px;font-size:0.9rem;"><i class="fas fa-list" style="color:#0f4c75;margin-left:8px;"></i> جميع الاستجابات</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table" style="font-size:0.8rem;">
+        <thead><tr>
+          <th>#</th><th>التاريخ</th>
+          ${form.fields.map(f => `<th>${f.label}</th>`).join('')}
+        </tr></thead>
+        <tbody>
+          ${responses.map((r, i) => `<tr>
+            <td>${i + 1}</td>
+            <td>${new Date(r.submittedAt).toLocaleDateString('ar-AE')}</td>
+            ${form.fields.map(f => `<td>${Array.isArray(r.answers[f.id]) ? r.answers[f.id].join(', ') : (r.answers[f.id] || '—')}</td>`).join('')}
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+
+  return html;
+}
+
+function toggleDashboard(formId) {
+  const dash = document.getElementById('dashboard_' + formId);
+  if (!dash) return;
+  if (dash.style.display === 'none') {
+    const form = getForms().find(f => f.id === formId);
+    const responses = getResponses(formId);
+    dash.innerHTML = renderFormDashboard(form, responses);
+    dash.style.display = 'block';
+    dash.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else {
+    dash.style.display = 'none';
+  }
+}
+
+function editForm(formId) {
+  const form = getForms().find(f => f.id === formId);
+  if (!form) return;
+  editingFormId = formId;
+  document.getElementById('formBuilderPanel').style.display = 'block';
+  document.getElementById('fbTitleAr').value = form.titleAr;
+  document.getElementById('fbTitleEn').value = form.titleEn || '';
+  document.getElementById('fbDesc').value = form.description || '';
+  document.getElementById('fbFields').innerHTML = '';
+  fbFieldCount = 0;
+  form.fields.forEach(f => addFormField(f));
+  document.getElementById('formBuilderPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+function deleteForm(formId) {
+  if (!confirm('هل أنت متأكد من حذف هذا النموذج؟ سيتم حذف جميع الاستجابات أيضاً.')) return;
+  let forms = getForms();
+  forms = forms.filter(f => f.id !== formId);
+  saveForms(forms);
+  localStorage.removeItem('aljood_responses_' + formId);
+  renderFormsList();
+}
+
+// ===== FILL FORM =====
+function openFillForm(formId) {
+  const form = getForms().find(f => f.id === formId);
+  if (!form) return;
+  fillFormId = formId;
+  document.getElementById('fillFormTitle').textContent = form.titleAr + (form.titleEn ? ' — ' + form.titleEn : '');
+  document.getElementById('fillFormDesc').textContent = form.description || '';
+  
+  const fieldsDiv = document.getElementById('fillFormFields');
+  fieldsDiv.innerHTML = form.fields.map(field => {
+    const req = field.required ? '<span style="color:red;">*</span>' : '';
+    let input = '';
+    switch (field.type) {
+      case 'text':
+        input = `<input type="text" id="ans_${field.id}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;direction:rtl;" />`;
+        break;
+      case 'textarea':
+        input = `<textarea id="ans_${field.id}" rows="3" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;direction:rtl;resize:vertical;"></textarea>`;
+        break;
+      case 'number':
+        input = `<input type="number" id="ans_${field.id}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;" />`;
+        break;
+      case 'date':
+        input = `<input type="date" id="ans_${field.id}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;" />`;
+        break;
+      case 'select':
+        input = `<select id="ans_${field.id}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;cursor:pointer;"><option value="">-- اختر --</option>${field.options.map(o => `<option>${o}</option>`).join('')}</select>`;
+        break;
+      case 'radio':
+        input = field.options.map(o => `<label style="display:flex;align-items:center;gap:8px;padding:8px;border:1.5px solid #e0e0e0;border-radius:6px;cursor:pointer;margin-bottom:6px;">
+          <input type="radio" name="ans_${field.id}" value="${o}" style="accent-color:#c9a227;"> ${o}</label>`).join('');
+        break;
+      case 'checkbox':
+        input = field.options.map(o => `<label style="display:flex;align-items:center;gap:8px;padding:8px;border:1.5px solid #e0e0e0;border-radius:6px;cursor:pointer;margin-bottom:6px;">
+          <input type="checkbox" name="ans_${field.id}" value="${o}" style="accent-color:#c9a227;"> ${o}</label>`).join('');
+        break;
+    }
+    return `<div>
+      <label style="font-size:0.9rem;font-weight:700;color:#1a1a2e;display:block;margin-bottom:8px;">${field.label} ${req}</label>
+      ${input}
+    </div>`;
+  }).join('');
+  
+  const modal = document.getElementById('fillFormModal');
+  modal.style.display = 'flex';
+}
+
+function closeFillModal() {
+  document.getElementById('fillFormModal').style.display = 'none';
+  fillFormId = null;
+}
+
+function submitFormResponse() {
+  const form = getForms().find(f => f.id === fillFormId);
+  if (!form) return;
+  const answers = {};
+  let hasError = false;
+
+  form.fields.forEach(field => {
+    if (field.type === 'radio') {
+      const sel = document.querySelector(`input[name="ans_${field.id}"]:checked`);
+      answers[field.id] = sel ? sel.value : '';
+      if (field.required && !sel) hasError = true;
+    } else if (field.type === 'checkbox') {
+      const checked = Array.from(document.querySelectorAll(`input[name="ans_${field.id}"]:checked`)).map(c => c.value);
+      answers[field.id] = checked;
+      if (field.required && checked.length === 0) hasError = true;
+    } else {
+      const el = document.getElementById('ans_' + field.id);
+      answers[field.id] = el ? el.value.trim() : '';
+      if (field.required && (!el || !el.value.trim())) hasError = true;
+    }
+  });
+
+  if (hasError) { alert('الرجاء تعبئة جميع الحقول الإلزامية *'); return; }
+
+  const responses = getResponses(fillFormId);
+  responses.push({ id: 'r_' + Date.now(), submittedBy: currentRole, submittedAt: new Date().toISOString(), answers });
+  saveResponses(fillFormId, responses);
+  closeFillModal();
+  renderFormsList();
+  alert('✅ تم إرسال النموذج بنجاح! شكراً لك.');
+}
+
+// Close fill modal on backdrop
+document.getElementById('fillFormModal').addEventListener('click', function(e) {
+  if (e.target === this) closeFillModal();
+});
 
 </script>
 
