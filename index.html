@@ -1160,15 +1160,12 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
             <i class="fas fa-expand-alt"></i> فتح بملء الشاشة
           </a>
         </div>
-        <iframe
-          src="https://munira35.github.io/grade-dashboard/teacher-dashboard.html"
-          width="100%"
-          height="850"
-          frameborder="0"
-          style="display:block;"
-          loading="lazy">
-          جارٍ التحميل…
-        </iframe>
+        <div id="teacherDashContent" style="background:#f0f4f8;min-height:200px;padding:20px;text-align:center;direction:rtl;">
+          <div id="teacherDashLoader" style="padding:40px;color:#666;">
+            <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:#c9a227;"></i>
+            <p style="margin-top:12px;">جارٍ تحميل لوحة النتائج…</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1945,17 +1942,48 @@ function saveResponses(formId, responses) {
   localStorage.setItem('aljood_responses_' + formId, JSON.stringify(responses));
 }
 
+let teacherDashLoaded = false;
 function toggleTeacherDashboard() {
   const el = document.getElementById('teacherDashboardEmbed');
   const btn = document.getElementById('toggleTeacherDashBtn');
+  const content = document.getElementById('teacherDashContent');
   if (!el) return;
   if (el.style.display === 'none') {
     el.style.display = 'block';
-    btn.innerHTML = '<i class="fas fa-chart-bar"></i> إخفاء النتائج';
+    btn.innerHTML = '<i class="fas fa-chart-pie"></i> 📊 إخفاء النتائج';
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!teacherDashLoaded && content) {
+      fetch('teacher-dashboard.html')
+        .then(r => r.text())
+        .then(html => {
+          // Extract body content from fetched HTML
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          // Inject all styles from the fetched page
+          const styles = doc.querySelectorAll('style');
+          styles.forEach(s => {
+            const st = document.createElement('style');
+            st.textContent = s.textContent;
+            document.head.appendChild(st);
+          });
+          // Get body content
+          const body = doc.body;
+          if (body) {
+            content.style.padding = '0';
+            content.style.background = '#f0f4f8';
+            content.innerHTML = body.innerHTML;
+          }
+          teacherDashLoaded = true;
+        })
+        .catch(err => {
+          content.innerHTML = '<div style="padding:30px;text-align:center;color:#c00;">' +
+            '<i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>' +
+            '<p style="margin-top:12px;">تعذّر تحميل النتائج. <a href="teacher-dashboard.html" target="_blank" style="color:#c9a227;font-weight:700;">فتح في نافذة جديدة ↗</a></p></div>';
+        });
+    }
   } else {
     el.style.display = 'none';
-    btn.innerHTML = '<i class="fas fa-chart-bar"></i> نتائج الاستبيان';
+    btn.innerHTML = '<i class="fas fa-chart-pie" style="font-size:1.1rem;"></i> 📊 نتائج الاستبيان';
   }
 }
 
