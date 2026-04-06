@@ -1116,8 +1116,8 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
             <i class="fab fa-google" style="color:#fff;font-size:1.1rem;"></i>
           </div>
           <div>
-            <div style="color:#fff;font-weight:700;font-size:1rem;">استبيان المدرسة</div>
-            <div style="color:rgba(255,255,255,0.85);font-size:0.8rem;">School Survey — Google Forms</div>
+            <div style="color:#fff;font-weight:700;font-size:1rem;">الموارد التعليمية الإلكترونية للمعلمين</div>
+            <div style="color:rgba(255,255,255,0.85);font-size:0.8rem;">Teacher Online Resources — Google Forms</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -1127,7 +1127,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
           </button>
           <button onclick="toggleTeacherDashboard()" id="toggleTeacherDashBtn"
             style="background:linear-gradient(135deg,#c9a227,#e8c547);border:3px solid #fff;border-radius:10px;padding:10px 20px;color:#1a1a2e;cursor:pointer;font-size:0.95rem;display:flex;align-items:center;gap:8px;font-weight:800;box-shadow:0 3px 12px rgba(0,0,0,0.25);letter-spacing:0.3px;">
-            <i class="fas fa-chart-pie" style="font-size:1.1rem;"></i> 📊 نتائج الاستبيان
+            <i class="fas fa-chart-pie" style="font-size:1.1rem;"></i> 📊 نتائج الموارد التعليمية
           </button>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLScrSz-LzS3h-WJXQyW8W0NmceNXXUx_17zktwt2lOCsvu2v5Q/viewform?embedded=true" target="_blank"
             style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:8px 14px;color:#fff;text-decoration:none;font-size:0.85rem;display:flex;align-items:center;gap:6px;">
@@ -1153,7 +1153,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
       <div id="teacherDashboardEmbed" style="display:none;border-top:3px solid #c9a227;">
         <div style="background:linear-gradient(135deg,#1a1a2e,#0f4c75);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;direction:rtl;">
           <div style="color:#c9a227;font-weight:700;font-size:0.95rem;display:flex;align-items:center;gap:8px;">
-            <i class="fas fa-chart-pie"></i> لوحة نتائج الاستبيان — Live Survey Dashboard
+            <i class="fas fa-chart-pie"></i> لوحة نتائج الموارد التعليمية — Live Results Dashboard
           </div>
           <a href="https://munira35.github.io/grade-dashboard/teacher-dashboard.html" target="_blank"
             style="color:rgba(255,255,255,0.7);font-size:0.8rem;text-decoration:none;display:flex;align-items:center;gap:4px;">
@@ -1983,7 +1983,7 @@ function toggleTeacherDashboard() {
     }
   } else {
     el.style.display = 'none';
-    btn.innerHTML = '<i class="fas fa-chart-pie" style="font-size:1.1rem;"></i> 📊 نتائج الاستبيان';
+    btn.innerHTML = '<i class="fas fa-chart-pie" style="font-size:1.1rem;"></i> 📊 نتائج الموارد التعليمية';
   }
 }
 
