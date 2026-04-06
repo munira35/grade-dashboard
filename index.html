@@ -408,6 +408,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     
     <div class="nav-section-title">البرامج والأنشطة</div>
     <div class="nav-item" onclick="showSection('distance')"><i class="fas fa-laptop"></i><span>التعلم عن بُعد</span></div>
+    <div class="nav-item" onclick="showSection('resources')"><i class="fas fa-star"></i><span>موارد المعلمين</span></div>
     <div class="nav-item" onclick="showSection('projects')"><i class="fas fa-flask"></i><span>المشاريع المدرسية</span></div>
     <div class="nav-item" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i><span>الفعاليات والأحداث</span></div>
     <div class="nav-item" onclick="showSection('upcoming')"><i class="fas fa-calendar-plus"></i><span>الفعاليات القادمة</span></div>
@@ -415,7 +416,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
     <div class="nav-section-title">المحتوى</div>
     <div class="nav-item" onclick="showSection('achievements')"><i class="fas fa-trophy"></i><span>الإنجازات المدرسية</span></div>
     <div class="nav-item" onclick="showSection('documents')"><i class="fas fa-folder-open"></i><span>الوثائق والملفات</span></div>
-    <div class="nav-item" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#e53e3e">جديد</span></div>
+    <div class="nav-item" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#718096">قريباً</span></div>
     
     <div class="admin-only" id="adminMenu" style="display:none">
       <div class="nav-section-title" style="color:rgba(201,162,39,0.7)">⚙ لوحة المدير</div>
@@ -803,113 +804,132 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 
 
     <!-- ===== PARENTS PORTAL ===== -->
-    <div class="section" id="section-parents">
-      <div class="page-header" style="background:linear-gradient(135deg,#1a0a2e,#2d1b6b)">
-        <div class="page-header-text">
-          <h1>❤️ بوابة أولياء الأمور</h1>
-          <p>Parents Portal — تتبع مسيرة ابنك / ابنتك الأكاديمية</p>
-        </div>
-        <i class="fas fa-heart page-header-icon"></i>
-      </div>
+    
+<div class="section" id="section-resources">
+  <div class="section-header">
+    <h1>🌟 موارد المعلمين</h1>
+    <p>Teacher Digital Resources — أدوات التعليم الرقمي للمعلمين</p>
+  </div>
 
-      <div class="template-notice">
-        <i class="fas fa-info-circle" style="font-size:1.2rem;margin-top:2px;flex-shrink:0"></i>
-        <div><strong>ملاحظة:</strong> هذه بوابة تجريبية ببيانات نموذجية. يمكن لمدير النظام تحديث بيانات الطلاب الفعلية (الهوية الإماراتية، الحساب الدراسي) في أي وقت.</div>
-      </div>
+  <style>
+    .res-category { background:white; border-radius:16px; padding:24px; margin-bottom:28px; box-shadow:0 2px 15px rgba(0,0,0,0.07); }
+    .res-category-title { display:flex; align-items:center; gap:12px; font-size:1.1rem; font-weight:700; color:var(--primary); margin-bottom:18px; padding-bottom:12px; border-bottom:2px solid var(--accent); }
+    .res-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px; }
+    .res-btn { display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 10px; border-radius:12px; border:2px solid #e8ecf0; background:#f9fafb; cursor:pointer; text-decoration:none; color:var(--primary); font-size:0.82rem; font-weight:600; transition:all 0.2s; text-align:center; }
+    .res-btn:hover { background:var(--primary); color:white; border-color:var(--primary); transform:translateY(-3px); box-shadow:0 6px 20px rgba(26,54,93,0.2); }
+    .res-btn .res-icon { font-size:1.8rem; }
+    .res-btn .res-name { font-size:0.78rem; color:#888; }
+    .res-btn:hover .res-name { color:rgba(255,255,255,0.7); }
+    @media(max-width:600px){ .res-grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
 
-      <div class="parent-welcome">
-        <h2>🌟 مرحباً بكم في بوابة أولياء الأمور — مدرسة الجود</h2>
-        <p>يمكنكم من خلال هذه البوابة الاطلاع على درجات ابنكم/ابنتكم، تقاريرهم الأكاديمية، وبيانات الدخول المدرسي. اختر الصف وأدخل رقم الهوية الإماراتية للبحث.</p>
-      </div>
+  <!-- Distance Learning -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">💻</span> التعلم عن بُعد — Distance Learning</div>
+    <div class="res-grid">
+      <a href="https://classroom.google.com" target="_blank" class="res-btn"><span class="res-icon">📚</span>Google Classroom<span class="res-name">Google</span></a>
+      <a href="https://teams.microsoft.com" target="_blank" class="res-btn"><span class="res-icon">💬</span>Microsoft Teams<span class="res-name">Microsoft</span></a>
+      <a href="https://zoom.us" target="_blank" class="res-btn"><span class="res-icon">🎥</span>Zoom<span class="res-name">Video Meetings</span></a>
+      <a href="https://nearpod.com" target="_blank" class="res-btn"><span class="res-icon">📡</span>Nearpod<span class="res-name">Interactive Lessons</span></a>
+      <a href="https://edpuzzle.com" target="_blank" class="res-btn"><span class="res-icon">🎬</span>Edpuzzle<span class="res-name">Video Lessons</span></a>
+      <a href="https://web.seesaw.me" target="_blank" class="res-btn"><span class="res-icon">🌱</span>Seesaw<span class="res-name">Student Portfolio</span></a>
+      <a href="https://flipgrid.com" target="_blank" class="res-btn"><span class="res-icon">🎙️</span>Flip<span class="res-name">Video Discussion</span></a>
+      <a href="https://moodle.org" target="_blank" class="res-btn"><span class="res-icon">🎓</span>Moodle<span class="res-name">LMS Platform</span></a>
+    </div>
+  </div>
 
-      <div class="parent-search-box">
-        <h3><i class="fas fa-search" style="color:var(--accent)"></i> ابحث عن بيانات ابنك / ابنتك</h3>
-        <div class="parent-filters">
-          <select class="parent-filter-select" id="parentGradeFilter" onchange="resetParentSearch()">
-            <option value="">-- اختر الصف --</option>
-            <option value="1">الصف الأول</option>
-            <option value="2">الصف الثاني</option>
-            <option value="3">الصف الثالث</option>
-            <option value="4">الصف الرابع</option>
-            <option value="5">الصف الخامس</option>
-            <option value="6">الصف السادس</option>
-            <option value="7">الصف السابع</option>
-            <option value="8">الصف الثامن</option>
-          </select>
-          <input type="text" class="parent-filter-input" id="parentEmiratesId"
-            placeholder="رقم الهوية الإماراتية (784-XXXX-XXXXXXX-X)"
-            oninput="this.value=this.value.replace(/[^0-9\-]/g,'')" maxlength="18">
-          <button class="parent-search-btn" onclick="searchParent()">
-            <i class="fas fa-search"></i> &nbsp; بحث عن الطالب
-          </button>
-        </div>
-        <div id="parentNoResult" class="no-student-msg">
-          <i class="fas fa-user-times" style="font-size:2.5rem;color:#e2e8f0;margin-bottom:10px"></i>
-          <p>لم يتم العثور على طالب بهذه البيانات.<br><small>تأكد من اختيار الصف الصحيح وإدخال رقم الهوية بشكل دقيق.</small></p>
-        </div>
-      </div>
+  <!-- Quizzes & Assessment -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">✏️</span> الاختبارات والتقييم — Quizzes & Assessment</div>
+    <div class="res-grid">
+      <a href="https://kahoot.com" target="_blank" class="res-btn"><span class="res-icon">🎮</span>Kahoot!<span class="res-name">Game-Based Quiz</span></a>
+      <a href="https://quizizz.com" target="_blank" class="res-btn"><span class="res-icon">⚡</span>Quizizz<span class="res-name">Self-Paced Quiz</span></a>
+      <a href="https://quizlet.com" target="_blank" class="res-btn"><span class="res-icon">🃏</span>Quizlet<span class="res-name">Flashcards</span></a>
+      <a href="https://www.mentimeter.com" target="_blank" class="res-btn"><span class="res-icon">📊</span>Mentimeter<span class="res-name">Live Polls</span></a>
+      <a href="https://www.socrative.com" target="_blank" class="res-btn"><span class="res-icon">🚀</span>Socrative<span class="res-name">Smart Assessment</span></a>
+      <a href="https://gimkit.com" target="_blank" class="res-btn"><span class="res-icon">💰</span>Gimkit<span class="res-name">Earn & Learn</span></a>
+      <a href="https://blooket.com" target="_blank" class="res-btn"><span class="res-icon">🐾</span>Blooket<span class="res-name">Game Sets</span></a>
+      <a href="https://forms.google.com" target="_blank" class="res-btn"><span class="res-icon">📝</span>Google Forms<span class="res-name">Online Forms</span></a>
+    </div>
+  </div>
 
-      <!-- Report Card -->
-      <div class="report-card" id="studentReportCard">
-        <div class="report-card-header">
-          <div class="report-card-avatar">👨‍🎓</div>
-          <div>
-            <div class="report-card-name" id="rc-name">—</div>
-            <div class="report-card-meta" id="rc-meta">—</div>
-            <div class="report-card-id" id="rc-id">—</div>
-          </div>
-        </div>
+  <!-- Activities & Engagement -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">🎨</span> الأنشطة والتفاعل — Activities & Engagement</div>
+    <div class="res-grid">
+      <a href="https://padlet.com" target="_blank" class="res-btn"><span class="res-icon">📌</span>Padlet<span class="res-name">Digital Wall</span></a>
+      <a href="https://flip.com" target="_blank" class="res-btn"><span class="res-icon">🎞️</span>Flip<span class="res-name">Video Board</span></a>
+      <a href="https://wordwall.net" target="_blank" class="res-btn"><span class="res-icon">🔤</span>Wordwall<span class="res-name">Activity Games</span></a>
+      <a href="https://www.canva.com" target="_blank" class="res-btn"><span class="res-icon">🎨</span>Canva<span class="res-name">Design Tool</span></a>
+      <a href="https://classroomscreen.com" target="_blank" class="res-btn"><span class="res-icon">🖥️</span>ClassroomScreen<span class="res-name">Class Tools</span></a>
+      <a href="https://wakelet.com" target="_blank" class="res-btn"><span class="res-icon">🌊</span>Wakelet<span class="res-name">Content Curation</span></a>
+      <a href="https://www.classdojo.com" target="_blank" class="res-btn"><span class="res-icon">🏆</span>ClassDojo<span class="res-name">Classroom Culture</span></a>
+      <a href="https://jamboard.google.com" target="_blank" class="res-btn"><span class="res-icon">🗒️</span>Jamboard<span class="res-name">Digital Whiteboard</span></a>
+    </div>
+  </div>
 
-        <div class="report-summary">
-          <div>
-            <div class="summary-item-label">المعدل العام</div>
-            <div class="summary-item-value" id="rc-avg">—</div>
-          </div>
-          <div>
-            <div class="summary-item-label">الترتيب في الصف</div>
-            <div class="summary-item-value" id="rc-rank">—</div>
-          </div>
-          <div>
-            <div class="summary-item-label">الحالة</div>
-            <div class="summary-item-value" id="rc-status">—</div>
-          </div>
-        </div>
+  <!-- Subject Resources -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">🌍</span> موارد المواد — Subject Resources</div>
+    <div class="res-grid">
+      <a href="https://www.khanacademy.org" target="_blank" class="res-btn"><span class="res-icon">🧠</span>Khan Academy<span class="res-name">All Subjects</span></a>
+      <a href="https://www.desmos.com" target="_blank" class="res-btn"><span class="res-icon">📐</span>Desmos<span class="res-name">Math Graphing</span></a>
+      <a href="https://commonlit.org" target="_blank" class="res-btn"><span class="res-icon">📖</span>CommonLit<span class="res-name">Reading & Literacy</span></a>
+      <a href="https://scratch.mit.edu" target="_blank" class="res-btn"><span class="res-icon">🐱</span>Scratch<span class="res-name">Coding for Kids</span></a>
+      <a href="https://www.duolingo.com" target="_blank" class="res-btn"><span class="res-icon">🦜</span>Duolingo<span class="res-name">Language Learning</span></a>
+      <a href="https://phet.colorado.edu" target="_blank" class="res-btn"><span class="res-icon">⚗️</span>PhET Simulations<span class="res-name">Science & Math</span></a>
+      <a href="https://www.nationalgeographic.com/education" target="_blank" class="res-btn"><span class="res-icon">🌏</span>Nat Geo Education<span class="res-name">Geography & Science</span></a>
+      <a href="https://www.tinkercad.com" target="_blank" class="res-btn"><span class="res-icon">🔧</span>Tinkercad<span class="res-name">3D Design & STEM</span></a>
+    </div>
+  </div>
 
-        <h4 style="color:var(--primary);margin-bottom:15px;font-size:0.95rem"><i class="fas fa-chart-bar" style="color:var(--accent)"></i> &nbsp; درجات الفصل الثاني</h4>
-        <div class="marks-grid" id="rc-marks"></div>
+  <!-- Teacher Tools -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">🛠️</span> أدوات المعلم — Teacher Tools</div>
+    <div class="res-grid">
+      <a href="https://drive.google.com" target="_blank" class="res-btn"><span class="res-icon">💾</span>Google Drive<span class="res-name">File Storage</span></a>
+      <a href="https://www.loom.com" target="_blank" class="res-btn"><span class="res-icon">📹</span>Loom<span class="res-name">Screen Recording</span></a>
+      <a href="https://slides.google.com" target="_blank" class="res-btn"><span class="res-icon">📊</span>Google Slides<span class="res-name">Presentations</span></a>
+      <a href="https://www.diffit.me" target="_blank" class="res-btn"><span class="res-icon">🤖</span>Diffit AI<span class="res-name">AI Lesson Helper</span></a>
+      <a href="https://www.classpoint.io" target="_blank" class="res-btn"><span class="res-icon">🎯</span>ClassPoint<span class="res-name">PowerPoint Add-in</span></a>
+      <a href="https://www.twinkl.com" target="_blank" class="res-btn"><span class="res-icon">⭐</span>Twinkl<span class="res-name">Teaching Resources</span></a>
+      <a href="https://www.tes.com" target="_blank" class="res-btn"><span class="res-icon">📋</span>TES Resources<span class="res-name">Lesson Plans</span></a>
+      <a href="https://ideaflip.com" target="_blank" class="res-btn"><span class="res-icon">💡</span>IdeaFlip<span class="res-name">Brainstorming</span></a>
+    </div>
+  </div>
 
-        <div class="report-comments" style="margin-bottom:20px">
-          <h4><i class="fas fa-comment-dots" style="color:var(--accent)"></i> &nbsp; ملاحظات المعلمين</h4>
-          <p id="rc-comments">—</p>
-        </div>
+  <!-- UAE / MOE Resources -->
+  <div class="res-category">
+    <div class="res-category-title"><span style="font-size:1.5rem;">🇦🇪</span> الموارد الإماراتية — UAE & MOE Resources</div>
+    <div class="res-grid">
+      <a href="https://www.moe.gov.ae" target="_blank" class="res-btn"><span class="res-icon">🏛️</span>وزارة التربية<span class="res-name">MOE UAE</span></a>
+      <a href="https://uaecurriculum.com" target="_blank" class="res-btn"><span class="res-icon">📚</span>المنهج الإماراتي<span class="res-name">UAE Curriculum</span></a>
+      <a href="https://www.alef.ae" target="_blank" class="res-btn"><span class="res-icon">🌙</span>Alef Education<span class="res-name">ألف التعليم</span></a>
+      <a href="https://www.hamdan.ae" target="_blank" class="res-btn"><span class="res-icon">🏆</span>جائزة حمدان<span class="res-name">Education Award</span></a>
+    </div>
+  </div>
 
-        <h4 style="color:var(--primary);margin-bottom:15px;font-size:0.95rem"><i class="fas fa-key" style="color:var(--accent)"></i> &nbsp; بيانات الدخول المدرسي</h4>
-        <div class="credentials-box">
-          <div class="credentials-row">
-            <span class="cred-label">البريد الإلكتروني المدرسي</span>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span class="cred-value" id="rc-email">—</span>
-              <button class="copy-btn" onclick="copyText('rc-email')">نسخ</button>
-            </div>
-          </div>
-          <div class="credentials-row">
-            <span class="cred-label">كلمة المرور</span>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span class="cred-value" id="rc-password">—</span>
-              <button class="copy-btn" onclick="copyText('rc-password')">نسخ</button>
-            </div>
-          </div>
-          <div class="credentials-row">
-            <span class="cred-label">رمز Google Classroom</span>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span class="cred-value" id="rc-classroom">—</span>
-              <button class="copy-btn" onclick="copyText('rc-classroom')">نسخ</button>
-            </div>
-          </div>
-        </div>
-      </div>
+</div><!-- end resources section -->
 
-    </div><!-- end parents section -->
+<div class="section" id="section-parents">
+  <div class="section-header">
+    <h1>❤️ بوابة أولياء الأمور</h1>
+    <p>Parents Portal</p>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px;">
+    <div style="font-size:5rem;margin-bottom:24px;animation:pulse 2s infinite;">🚧</div>
+    <h2 style="color:var(--primary);font-size:2rem;margin-bottom:12px;">قيد الإنشاء</h2>
+    <h3 style="color:var(--accent);font-size:1.3rem;margin-bottom:20px;">Coming Soon</h3>
+    <p style="color:#666;font-size:1rem;max-width:480px;line-height:1.8;margin-bottom:30px;">
+      بوابة أولياء الأمور قيد التطوير وستتيح للوالدين متابعة نتائج أبنائهم وتقاريرهم الأكاديمية.<br>
+      <span style="color:#999;font-size:0.9rem;">The Parents Portal is under development and will allow parents to track their children's academic progress.</span>
+    </p>
+    <div style="background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:16px;padding:24px 36px;color:white;max-width:400px;">
+      <div style="font-size:2rem;margin-bottom:10px;">📬</div>
+      <p style="margin:0;font-size:0.95rem;line-height:1.7;">سيتم الإعلان عن إطلاق البوابة قريباً<br><span style="color:var(--accent);font-weight:700;">We will launch soon — stay tuned!</span></p>
+    </div>
+  </div>
+</div><!-- end parents section -->
 
     <!-- ===== ADMIN PANEL (ADMIN ONLY) ===== -->
     <div class="section" id="section-admin_panel">
@@ -1013,7 +1033,8 @@ const sectionTitles = {
   'achievements': '🏆 الإنجازات',
   'documents': '📄 الوثائق والملفات',
   'admin_panel': '⚙️ لوحة المدير',
-  'parents': '❤️ بوابة أولياء الأمور'
+  'resources': '🌟 موارد المعلمين',
+    'parents': '❤️ بوابة أولياء الأمور'
 };
 
 function showSection(name) {
