@@ -4,7 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بوابة مدرسة الجود | Al Jood School Portal</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js">
+function toggleWebsiteManager() {
+  const content = document.getElementById('websiteManagerContent');
+  const icon = document.getElementById('wmToggleIcon');
+  if (!content) return;
+  const visible = content.style.display !== 'none';
+  content.style.display = visible ? 'none' : 'block';
+  if (icon) icon.textContent = visible ? '▶' : '▼';
+  if (!visible) renderWebsiteManager();
+}
+
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -83,6 +94,9 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
 .nav-item.active { background:rgba(201,162,39,0.15); color:var(--accent); border-right-color:var(--accent); }
 .nav-item i { width:18px; text-align:center; font-size:0.95rem; }
 .nav-item span { font-size:0.88rem; }
+
+.nav-edit-btn { margin-right:auto; opacity:0; transition:opacity 0.2s; cursor:pointer; padding:2px 4px; }
+.nav-item:hover .nav-edit-btn { opacity:1; }
 .nav-item .badge { margin-right:auto; background:var(--accent); color:var(--primary); border-radius:10px; padding:1px 8px; font-size:0.7rem; font-weight:700; }
 .admin-only { border-top:1px solid rgba(201,162,39,0.1); margin-top:5px; }
 .admin-badge { background:rgba(201,162,39,0.2); border:1px solid rgba(201,162,39,0.3); border-radius:5px; padding:2px 6px; font-size:0.65rem; color:var(--accent); margin-right:auto; }
@@ -437,27 +451,7 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
       </div>
     </div>
 
-    <div class="nav-section-title">القائمة الرئيسية</div>
-    <div class="nav-item active" data-section="home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-    <div class="nav-item" data-section="analysis" onclick="showSection('analysis')"><i class="fas fa-chart-bar"></i><span>تحليل درجات الفصل الثاني</span><span class="badge">جديد</span></div>
-    
-    <div class="nav-section-title">الأقسام</div>
-    <div class="nav-item" data-section="teachers" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i><span>المعلمون</span></div>
-    <div class="nav-item" data-section="students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i><span>الطلاب</span></div>
-    <div class="nav-item" data-section="admin_section" onclick="showSection('admin_section')"><i class="fas fa-building"></i><span>الإدارة المدرسية</span></div>
-    
-    <div class="nav-section-title">البرامج والأنشطة</div>
-    <div class="nav-item" data-section="distance" onclick="showSection('distance')"><i class="fas fa-laptop"></i><span>التعلم عن بُعد</span></div>
-    <div class="nav-item" data-section="resources" onclick="showSection('resources')"><i class="fas fa-star"></i><span>موارد المعلمين</span></div>
-    <div class="nav-item" data-section="projects" onclick="showSection('projects')"><i class="fas fa-flask"></i><span>المشاريع المدرسية</span></div>
-    <div class="nav-item" data-section="events" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i><span>الفعاليات والأحداث</span></div>
-    <div class="nav-item" data-section="upcoming" onclick="showSection('upcoming')"><i class="fas fa-calendar-plus"></i><span>الفعاليات القادمة</span></div>
-    
-    <div class="nav-section-title">المحتوى</div>
-    <div class="nav-item" data-section="achievements" onclick="showSection('achievements')"><i class="fas fa-trophy"></i><span>الإنجازات المدرسية</span></div>
-    <div class="nav-item" data-section="documents" onclick="showSection('documents')"><i class="fas fa-folder-open"></i><span>الوثائق والملفات</span></div>
-    <div class="nav-item" data-section="parents" onclick="showSection('parents')"><i class="fas fa-heart"></i><span>بوابة أولياء الأمور</span><span class="badge" style="background:#718096">قريباً</span></div>
-    <div class="nav-item" data-section="forms" onclick="showSection('forms')"><i class="fas fa-wpforms"></i><span>النماذج والاستبيانات</span><span class="badge" style="background:#10b981">جديد</span></div>
+    <div id="dynamicNav"><!-- rendered by renderNav() after login --></div>
     
     <div class="admin-only" id="adminMenu" style="display:none">
       <div class="nav-section-title" style="color:rgba(201,162,39,0.7)">⚙ لوحة المدير</div>
@@ -1037,6 +1031,15 @@ body { font-family:'Cairo',sans-serif; background:var(--light); color:var(--text
           <strong>⚠️ تنبيه أمني:</strong> يُنصح بتغيير كلمات المرور بشكل دوري. هذه البوابة مخصصة للاستخدام الداخلي للمدرسة.
         </div>
       </div>
+      <div class="card" id="websiteManagerCard">
+        <div class="card-title" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;" onclick="toggleWebsiteManager()">
+          <span><i class="fas fa-globe" style="color:#c9a227;"></i> 🌐 مدير الموقع — Website Manager</span>
+          <span id="wmToggleIcon" style="color:#c9a227;font-size:1.1rem;">▼</span>
+        </div>
+        <p style="color:#666;font-size:0.85rem;margin:4px 0 16px;">إضافة / حذف / تعديل / ترتيب أقسام القائمة الجانبية — والتحكم في من يرى كل قسم</p>
+        <div id="websiteManagerContent" style="display:block;"><!-- rendered by renderWebsiteManager() --></div>
+      </div>
+
       <div class="card">
         <div class="card-title"><i class="fas fa-link"></i> روابط سريعة للمدير</div>
         <div class="docs-grid">
@@ -1285,6 +1288,7 @@ function doLogin() {
     document.getElementById('userNameDisplay').textContent = user.name;
     document.getElementById('userRoleDisplay').textContent = user.roleLabel;
     if (user.role === 'admin' || user.role === 'principal') document.getElementById('adminMenu').style.display = 'block';
+    renderNav();
     setTimeout(() => renderAllSections(), 100);
     initCharts();
     updateDate();
@@ -1299,6 +1303,7 @@ function logout() {
   document.getElementById('app').style.display = 'none';
   document.getElementById('loginPass').value = '';
   document.getElementById('adminMenu').style.display = 'none';
+  document.getElementById('dynamicNav').innerHTML = '';
 }
 
 // ===== NAVIGATION =====
@@ -1327,7 +1332,7 @@ function showSection(name) {
   event.currentTarget.classList.add('active');
   document.getElementById('topbarTitle').textContent = sectionTitles[name] || name;
   window.scrollTo(0,0);
-  if (name === 'admin_panel') renderPwTable();
+  if (name === 'admin_panel') { renderPwTable(); renderWebsiteManager(); }
   if (name === 'forms') renderFormsList();
 }
 
@@ -1787,17 +1792,330 @@ function getEffectiveAccess(role) {
   return saved[role] || DEFAULT_ACCESS[role] || [];
 }
 
-function applyNavAccess() {
-  if (currentRole === 'admin') {
-    // Admin always sees everything
-    document.querySelectorAll('.nav-item[data-section]').forEach(el => el.style.display = 'flex');
-    return;
-  }
-  const access = getEffectiveAccess(currentRole);
-  document.querySelectorAll('.nav-item[data-section]').forEach(el => {
-    const sec = el.getAttribute('data-section');
-    el.style.display = access.includes(sec) ? 'flex' : 'none';
+
+// ===== NAV CONFIG SYSTEM =====
+const NAV_DEFAULT_CONFIG = [
+  { id:'home',          label:'الرئيسية',                  labelEn:'Home',                icon:'fa-home',               badge:'',     badgeColor:'', group:'main',       visibleTo:['admin','principal','teacher','staff','parent'] },
+  { id:'teachers',      label:'المعلمون',                  labelEn:'Teachers',            icon:'fa-chalkboard-teacher', badge:'',     badgeColor:'', group:'sections',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'students',      label:'الطلاب',                    labelEn:'Students',            icon:'fa-user-graduate',      badge:'',     badgeColor:'', group:'sections',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'admin_section', label:'الإدارة المدرسية',          labelEn:'Administration',      icon:'fa-building',           badge:'',     badgeColor:'', group:'sections',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'distance',      label:'التعلم عن بُعد',            labelEn:'Distance Learning',   icon:'fa-laptop',             badge:'',     badgeColor:'', group:'programs',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'resources',     label:'موارد المعلمين',            labelEn:'Teacher Resources',   icon:'fa-star',               badge:'',     badgeColor:'', group:'programs',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'projects',      label:'المشاريع المدرسية',         labelEn:'Projects',            icon:'fa-flask',              badge:'',     badgeColor:'', group:'programs',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'events',        label:'الفعاليات والأحداث',        labelEn:'Events',              icon:'fa-calendar-alt',       badge:'',     badgeColor:'', group:'programs',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'upcoming',      label:'الفعاليات القادمة',         labelEn:'Upcoming Events',     icon:'fa-calendar-plus',      badge:'',     badgeColor:'', group:'programs',   visibleTo:['admin','principal','teacher','staff'] },
+  { id:'achievements',  label:'الإنجازات المدرسية',        labelEn:'Achievements',        icon:'fa-trophy',             badge:'',     badgeColor:'', group:'content',    visibleTo:['admin','principal','teacher','staff'] },
+  { id:'documents',     label:'الوثائق والملفات',          labelEn:'Documents',           icon:'fa-folder-open',        badge:'',     badgeColor:'', group:'content',    visibleTo:['admin','principal','staff'] },
+  { id:'parents',       label:'بوابة أولياء الأمور',       labelEn:'Parent Portal',       icon:'fa-heart',              badge:'قريباً', badgeColor:'#718096', group:'content', visibleTo:['admin','principal','parent'] },
+  { id:'forms',         label:'النماذج والاستبيانات',      labelEn:'Forms & Surveys',     icon:'fa-wpforms',            badge:'جديد', badgeColor:'#10b981', group:'content', visibleTo:['admin','principal','teacher','staff'] },
+  { id:'analysis',      label:'تحليل درجات الفصل الثاني', labelEn:'Grade Analysis',      icon:'fa-chart-bar',          badge:'',     badgeColor:'', group:'main',       visibleTo:['principal','teacher','staff'] },
+];
+
+const GROUP_LABELS = { main:'القائمة الرئيسية', sections:'الأقسام', programs:'البرامج والأنشطة', content:'المحتوى' };
+
+function getNavConfig() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('aljood_nav_config') || 'null');
+    if (saved && Array.isArray(saved) && saved.length > 0) return saved;
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(NAV_DEFAULT_CONFIG));
+}
+
+function saveNavConfig(config) {
+  localStorage.setItem('aljood_nav_config', JSON.stringify(config));
+}
+
+function renderNav() {
+  const container = document.getElementById('dynamicNav');
+  if (!container) return;
+  const config = getNavConfig();
+  const access = currentRole === 'admin' ? config.map(s=>s.id) : getEffectiveAccess(currentRole);
+  // Group items
+  const groups = {};
+  const groupOrder = [];
+  config.forEach(item => {
+    if (!item.visibleTo.includes(currentRole) && currentRole !== 'admin') return;
+    if (!access.includes(item.id)) return;
+    const g = item.group || 'content';
+    if (!groups[g]) { groups[g] = []; groupOrder.push(g); }
+    groups[g].push(item);
   });
+  // Admin-only: exclude analysis
+  let html = '';
+  groupOrder.forEach(g => {
+    const items = groups[g];
+    if (!items || items.length === 0) return;
+    html += `<div class="nav-section-title">${GROUP_LABELS[g] || g}</div>`;
+    items.forEach(item => {
+      const badge = item.badge ? `<span class="badge" style="background:${item.badgeColor || 'var(--accent)'};">${item.badge}</span>` : '';
+      const adminEdit = (currentRole === 'admin' && item.id !== 'home')
+        ? `<span class="nav-edit-btn" onclick="event.stopPropagation();openNavEditModal('${item.id}')" title="تعديل"><i class="fas fa-pen" style="font-size:0.65rem;color:rgba(201,162,39,0.5);"></i></span>`
+        : '';
+      html += `<div class="nav-item" data-section="${item.id}" onclick="showSection('${item.id}')" style="position:relative;">
+        <i class="fas ${item.icon}"></i><span>${item.label}</span>${badge}${adminEdit}
+      </div>`;
+    });
+  });
+  container.innerHTML = html;
+  // Re-apply active state
+  document.querySelectorAll('#dynamicNav .nav-item[data-section]').forEach(el => {
+    if (el.getAttribute('data-section') === (document.querySelector('.section.active') || {id:''}).id) {
+      el.classList.add('active');
+    }
+  });
+}
+
+// ===== Nav Edit Modal =====
+function openNavEditModal(sectionId) {
+  if (currentRole !== 'admin') return;
+  const config = getNavConfig();
+  const item = config.find(s => s.id === sectionId);
+  if (!item) return;
+  // Remove existing modal
+  const old = document.getElementById('navEditModal');
+  if (old) old.remove();
+  const icons = ['fa-home','fa-chalkboard-teacher','fa-user-graduate','fa-building','fa-laptop','fa-star','fa-flask','fa-calendar-alt','fa-calendar-plus','fa-trophy','fa-folder-open','fa-heart','fa-wpforms','fa-chart-bar','fa-bell','fa-book','fa-users','fa-globe','fa-clipboard','fa-cog'];
+  const iconOptions = icons.map(ic => `<option value="${ic}" ${item.icon===ic?'selected':''}>${ic.replace('fa-','')}</option>`).join('');
+  const modal = document.createElement('div');
+  modal.id = 'navEditModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:16px;width:92%;max-width:480px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);direction:rtl;">
+      <div style="background:linear-gradient(135deg,#1a1a2e,#2d2d5e);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;">
+        <h3 style="margin:0;color:#c9a227;font-size:1rem;"><i class="fas fa-edit" style="margin-left:8px;"></i>تعديل القسم</h3>
+        <button onclick="document.getElementById('navEditModal').remove()" style="background:rgba(255,255,255,0.15);border:none;color:white;width:30px;height:30px;border-radius:50%;cursor:pointer;">&times;</button>
+      </div>
+      <div style="padding:24px;display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:#444;display:block;margin-bottom:6px;">اسم القسم (عربي)</label>
+          <input id="nevLabelAr" value="${item.label}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.95rem;box-sizing:border-box;direction:rtl;"/>
+        </div>
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:#444;display:block;margin-bottom:6px;">Section Name (English)</label>
+          <input id="nevLabelEn" value="${item.labelEn||''}" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.95rem;box-sizing:border-box;direction:ltr;"/>
+        </div>
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:#444;display:block;margin-bottom:6px;">الأيقونة</label>
+          <select id="nevIcon" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;">${iconOptions}</select>
+        </div>
+        <div>
+          <label style="font-size:0.82rem;font-weight:700;color:#444;display:block;margin-bottom:6px;">الشارة (اختياري — مثال: جديد، قريباً)</label>
+          <input id="nevBadge" value="${item.badge||''}" placeholder="اتركه فارغاً إن لم تحتج شارة" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;direction:rtl;"/>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;">
+          <button onclick="saveNavEdit('${sectionId}')" style="flex:1;padding:12px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:10px;cursor:pointer;font-weight:700;color:#1a1a2e;font-size:0.95rem;">💾 حفظ التعديل</button>
+          ${sectionId !== 'home' ? `<button onclick="deleteNavSection('${sectionId}')" style="padding:12px 16px;background:#fee2e2;border:2px solid #fca5a5;border-radius:10px;cursor:pointer;font-weight:700;color:#dc2626;font-size:0.9rem;"><i class='fas fa-trash'></i> حذف القسم</button>` : ''}
+          <button onclick="document.getElementById('navEditModal').remove()" style="padding:12px 16px;border:2px solid #ddd;background:#fff;border-radius:10px;cursor:pointer;color:#666;font-size:0.9rem;">إلغاء</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function saveNavEdit(sectionId) {
+  const config = getNavConfig();
+  const item = config.find(s => s.id === sectionId);
+  if (!item) return;
+  item.label = document.getElementById('nevLabelAr').value.trim() || item.label;
+  item.labelEn = document.getElementById('nevLabelEn').value.trim() || item.labelEn;
+  item.icon = document.getElementById('nevIcon').value;
+  item.badge = document.getElementById('nevBadge').value.trim();
+  saveNavConfig(config);
+  document.getElementById('navEditModal').remove();
+  renderNav();
+  renderWebsiteManager();
+  showToast('✅ تم تعديل القسم بنجاح');
+}
+
+function deleteNavSection(sectionId) {
+  if (sectionId === 'home') return;
+  if (!confirm('هل أنت متأكد من حذف هذا القسم من القائمة؟')) return;
+  const config = getNavConfig();
+  const idx = config.findIndex(s => s.id === sectionId);
+  if (idx > -1) config.splice(idx, 1);
+  saveNavConfig(config);
+  document.getElementById('navEditModal').remove();
+  renderNav();
+  renderWebsiteManager();
+  showToast('🗑️ تم حذف القسم من القائمة');
+}
+
+function moveNavSection(sectionId, dir) {
+  const config = getNavConfig();
+  const idx = config.findIndex(s => s.id === sectionId);
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= config.length) return;
+  [config[idx], config[newIdx]] = [config[newIdx], config[idx]];
+  saveNavConfig(config);
+  renderNav();
+  renderWebsiteManager();
+}
+
+function toggleNavVisibility(sectionId, role) {
+  if (sectionId === 'home') return;
+  const config = getNavConfig();
+  const item = config.find(s => s.id === sectionId);
+  if (!item) return;
+  if (!item.visibleTo) item.visibleTo = [];
+  if (item.visibleTo.includes(role)) {
+    item.visibleTo = item.visibleTo.filter(r => r !== role);
+  } else {
+    item.visibleTo.push(role);
+  }
+  saveNavConfig(config);
+  renderWebsiteManager();
+  renderNav();
+}
+
+function addNavSection() {
+  const label = document.getElementById('newSecLabel').value.trim();
+  const icon = document.getElementById('newSecIcon').value;
+  if (!label) { showToast('⚠️ أدخل اسم القسم'); return; }
+  const id = 'custom_' + Date.now();
+  const config = getNavConfig();
+  config.push({ id, label, labelEn: label, icon, badge:'', badgeColor:'', group:'content', visibleTo:['admin','principal','teacher','staff'] });
+  saveNavConfig(config);
+  document.getElementById('newSecLabel').value = '';
+  renderNav();
+  renderWebsiteManager();
+  // Create section div if it doesn't exist
+  if (!document.getElementById('section-' + id)) {
+    const sec = document.createElement('div');
+    sec.className = 'section';
+    sec.id = 'section-' + id;
+    sec.innerHTML = `<div class="page-header" style="background:linear-gradient(135deg,#1a2d4a,#2d5f8a)">
+      <div class="page-header-text"><h1>${label}</h1><p>قسم مخصص — Custom Section</p></div></div>
+      <div style="padding:20px;"><div class="card"><div class="card-title"><i class="fas ${icon}"></i> ${label}</div>
+      <p style="color:#666;text-align:center;padding:40px;">🚧 هذا قسم مخصص جديد. يمكنك إضافة محتوى عبر لوحة المدير.</p></div></div>`;
+    document.querySelector('.main-content').appendChild(sec);
+  }
+  // Add to sectionTitles
+  sectionTitles[id] = label;
+  showToast('✅ تم إضافة القسم بنجاح');
+}
+
+function resetNavConfig() {
+  if (!confirm('إعادة تعيين القائمة إلى الإعدادات الافتراضية؟')) return;
+  localStorage.removeItem('aljood_nav_config');
+  renderNav();
+  renderWebsiteManager();
+  showToast('↩️ تم إعادة تعيين القائمة');
+}
+
+function renderWebsiteManager() {
+  const container = document.getElementById('websiteManagerContent');
+  if (!container) return;
+  const config = getNavConfig();
+  const roles = ['principal','teacher','staff','parent'];
+  const roleLabels = { principal:'مديرة', teacher:'معلم', staff:'إداري', parent:'ولي أمر' };
+  
+  container.innerHTML = `
+    <!-- Add Section -->
+    <div class="card" style="border:2px dashed #c9a227;background:#fffbf0;">
+      <div class="card-title" style="color:#c9a227;"><i class="fas fa-plus-circle"></i> إضافة قسم جديد للقائمة</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+        <div style="flex:2;min-width:180px;">
+          <label style="font-size:0.8rem;font-weight:700;color:#555;display:block;margin-bottom:6px;">اسم القسم (عربي)</label>
+          <input id="newSecLabel" type="text" placeholder="مثال: الأندية المدرسية" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;box-sizing:border-box;direction:rtl;"/>
+        </div>
+        <div style="flex:1;min-width:140px;">
+          <label style="font-size:0.8rem;font-weight:700;color:#555;display:block;margin-bottom:6px;">الأيقونة</label>
+          <select id="newSecIcon" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:0.9rem;">
+            <option value="fa-star">⭐ star</option><option value="fa-users">👥 users</option>
+            <option value="fa-book">📖 book</option><option value="fa-bell">🔔 bell</option>
+            <option value="fa-globe">🌐 globe</option><option value="fa-clipboard">📋 clipboard</option>
+            <option value="fa-paint-brush">🎨 paint-brush</option><option value="fa-music">🎵 music</option>
+            <option value="fa-football-ball">⚽ football</option><option value="fa-microscope">🔬 microscope</option>
+          </select>
+        </div>
+        <button onclick="addNavSection()" style="padding:11px 20px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#1a1a2e;white-space:nowrap;">
+          <i class="fas fa-plus"></i> إضافة
+        </button>
+      </div>
+    </div>
+
+    <!-- Sections List -->
+    <div class="card">
+      <div class="card-title"><i class="fas fa-list"></i> إدارة أقسام القائمة (${config.length} قسم)</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead>
+            <tr style="background:#1a1a2e;color:white;">
+              <th style="padding:10px 12px;text-align:right;border-radius:8px 0 0 0;">القسم</th>
+              <th style="padding:10px 8px;text-align:center;">الترتيب</th>
+              <th style="padding:10px 8px;text-align:center;">مديرة</th>
+              <th style="padding:10px 8px;text-align:center;">معلم</th>
+              <th style="padding:10px 8px;text-align:center;">إداري</th>
+              <th style="padding:10px 8px;text-align:center;">ولي أمر</th>
+              <th style="padding:10px 12px;text-align:center;border-radius:0 8px 0 0;">تعديل</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${config.map((item, idx) => {
+              const isFirst = idx === 0;
+              const isLast = idx === config.length - 1;
+              return `<tr style="border-bottom:1px solid #f0f0f0;${item.id==='home'?'background:#fffbf0;':''}">
+                <td style="padding:10px 12px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <i class="fas ${item.icon}" style="color:#c9a227;width:16px;"></i>
+                    <div>
+                      <div style="font-weight:600;">${item.label}</div>
+                      <div style="font-size:0.75rem;color:#999;">${item.id}</div>
+                    </div>
+                    ${item.badge ? `<span style="background:${item.badgeColor||'#c9a227'};color:white;border-radius:6px;padding:1px 7px;font-size:0.7rem;">${item.badge}</span>` : ''}
+                    ${item.id==='home'?'<span style="font-size:0.7rem;color:#c9a227;font-weight:700;">مقفل</span>':''}
+                  </div>
+                </td>
+                <td style="padding:10px 8px;text-align:center;">
+                  ${item.id!=='home' ? `
+                  <div style="display:flex;gap:4px;justify-content:center;">
+                    <button onclick="moveNavSection('${item.id}',-1)" ${isFirst?'disabled':''} style="width:26px;height:26px;border:1px solid #ddd;background:#fff;border-radius:5px;cursor:pointer;font-size:0.8rem;${isFirst?'opacity:0.3;':''}" title="للأعلى">↑</button>
+                    <button onclick="moveNavSection('${item.id}',1)" ${isLast?'disabled':''} style="width:26px;height:26px;border:1px solid #ddd;background:#fff;border-radius:5px;cursor:pointer;font-size:0.8rem;${isLast?'opacity:0.3;':''}" title="للأسفل">↓</button>
+                  </div>` : '<span style="color:#ccc;font-size:0.75rem;">—</span>'}
+                </td>
+                ${roles.map(role => {
+                  if (item.id === 'home') return `<td style="text-align:center;"><i class="fas fa-check" style="color:#10b981;"></i></td>`;
+                  const vis = item.visibleTo && item.visibleTo.includes(role);
+                  return `<td style="text-align:center;padding:10px 8px;">
+                    <div onclick="toggleNavVisibility('${item.id}','${role}')" style="width:36px;height:20px;border-radius:10px;background:${vis?'#10b981':'#e0e0e0'};cursor:pointer;margin:0 auto;position:relative;transition:background 0.2s;" title="${vis?'مرئي':'مخفي'}">
+                      <div style="width:16px;height:16px;border-radius:50%;background:white;position:absolute;top:2px;${vis?'right:2px':'left:2px'};transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+                    </div>
+                  </td>`;
+                }).join('')}
+                <td style="padding:10px 12px;text-align:center;">
+                  ${item.id!=='home' ? `
+                  <button onclick="openNavEditModal('${item.id}')" style="padding:6px 12px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:700;color:#1a1a2e;">
+                    <i class="fas fa-pen"></i> تعديل
+                  </button>` : '<span style="color:#ccc;font-size:0.75rem;">—</span>'}
+                </td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end;">
+        <button onclick="resetNavConfig()" style="padding:10px 18px;background:#fee2e2;border:2px solid #fca5a5;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#dc2626;font-weight:700;">
+          ↩️ إعادة التعيين للافتراضي
+        </button>
+      </div>
+    </div>`;
+}
+
+// ===== Toast Notification =====
+function showToast(msg) {
+  const old = document.getElementById('globalToast');
+  if (old) old.remove();
+  const t = document.createElement('div');
+  t.id = 'globalToast';
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#c9a227;padding:12px 24px;border-radius:10px;font-size:0.9rem;font-weight:700;z-index:999999;box-shadow:0 4px 20px rgba(0,0,0,0.3);direction:rtl;';
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+function applyNavAccess() {
+  // Nav is rendered by renderNav() which already applies access and admin rules
+  renderNav();
 }
 
 // ===== Modal Tab Switching =====
